@@ -1,0 +1,1146 @@
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6276
+load:0x40078000,len:15748
+load:0x40080400,len:4
+ho 8 tail 4 room 4
+load:0x40080404,len:3860
+entry 0x4008063c
+[0;32mI (31) boot: ESP-IDF v5.4.1-dirty 2nd stage bootloader[0m
+[0;32mI (31) boot: compile time Dec 29 2025 10:46:12[0m
+[0;32mI (31) boot: Multicore bootloader[0m
+[0;32mI (33) boot: chip revision: v3.1[0m
+[0;32mI (36) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (40) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (47) boot: Enabling RNG early entropy source...[0m
+[0;32mI (51) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (80) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=0a39ch ( 41884) map[0m
+[0;32mI (105) esp_image: segment 1: paddr=0001a3c4 vaddr=3ff80000 size=0001ch (    28) load[0m
+[0;32mI (105) esp_image: segment 2: paddr=0001a3e8 vaddr=3ffb0000 size=02324h (  8996) load[0m
+[0;32mI (112) esp_image: segment 3: paddr=0001c714 vaddr=40080000 size=03904h ( 14596) load[0m
+[0;32mI (122) esp_image: segment 4: paddr=00020020 vaddr=400d0020 size=14bd4h ( 84948) map[0m
+[0;32mI (153) esp_image: segment 5: paddr=00034bfc vaddr=40083904 size=0952ch ( 38188) load[0m
+[0;32mI (174) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (174) boot: Disabling RNG early entropy source...[0m
+[0;32mI (184) cpu_start: Multicore app[0m
+[0;32mI (193) cpu_start: Pro cpu start user code[0m
+[0;32mI (193) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (193) app_init: Application information:[0m
+[0;32mI (193) app_init: Project name:     practice[0m
+[0;32mI (197) app_init: App version:      1[0m
+[0;32mI (200) app_init: Compile time:     Dec 29 2025 10:39:40[0m
+[0;32mI (205) app_init: ELF file SHA256:  8c055df67...[0m
+[0;32mI (210) app_init: ESP-IDF:          v5.4.1-dirty[0m
+[0;32mI (214) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (218) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (222) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (226) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (232) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (237) heap_init: At 3FFB2BE8 len 0002D418 (181 KiB): DRAM[0m
+[0;32mI (242) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (248) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (253) heap_init: At 4008CE30 len 000131D0 (76 KiB): IRAM[0m
+[0;32mI (260) spi_flash: detected chip: generic[0m
+[0;32mI (262) spi_flash: flash io: dio[0m
+[0;33mW (265) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (278) main_task: Started on CPU0[0m
+[0;32mI (288) main_task: Calling app_main()[0m
+[0;32mI (288) gpio: GPIO[2]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (288) main: Initializing the Sensor[0m
+[0;32mI (318) main: Read DHT: Temp 24.3, Hum 51.3[0m
+[0;32mI (318) main: Item Receive: 24[0m
+[0;32mI (318) main: Task Blocked[0m
+
+[0;32mI (318) main: queue item size 0[0m
+[0;32mI (318) main_task: Returned from app_main()[0m
+[0;32mI (1318) main: Task Blocked[0m
+
+[0;32mI (1318) main: queue item size 0[0m
+[0;32mI (2318) main: Task Running[0m
+
+[0;32mI (2318) main: queue item size 0[0m
+[0;32mI (2338) main: Read DHT: Temp 24.3, Hum 50.6[0m
+[0;32mI (2338) main: Item Receive: 24[0m
+[0;32mI (3318) main: Task Blocked[0m
+
+[0;32mI (3318) main: queue item size 0[0m
+[0;32mI (4318) main: Task Blocked[0m
+
+[0;32mI (4318) main: queue item size 0[0m
+[0;32mI (4358) main: Read DHT: Temp 24.3, Hum 50.7[0m
+[0;32mI (4358) main: Item Receive: 24[0m
+[0;32mI (5318) main: Task Blocked[0m
+
+[0;32mI (5318) main: queue item size 0[0m
+[0;32mI (6318) main: Task Blocked[0m
+
+[0;32mI (6318) main: queue item size 0[0m
+[0;32mI (6378) main: Read DHT: Temp 24.3, Hum 50.7[0m
+[0;32mI (6378) main: Item Receive: 24[0m
+[0;32mI (7318) main: Task Blocked[0m
+
+[0;32mI (7318) main: queue item size 0[0m
+[0;32mI (8318) main: Task Blocked[0m
+
+[0;32mI (8318) main: queue item size 0[0m
+[0;32mI (8398) main: Read DHT: Temp 24.3, Hum 50.8[0m
+[0;32mI (8398) main: Item Receive: 24[0m
+[0;32mI (9318) main: Task Blocked[0m
+
+[0;32mI (9318) main: queue item size 0[0m
+[0;32mI (10318) main: Task Blocked[0m
+
+[0;32mI (10318) main: queue item size 0[0m
+[0;32mI (10418) main: Read DHT: Temp 24.3, Hum 50.8[0m
+[0;32mI (10418) main: Item Receive: 24[0m
+[0;32mI (11318) main: Task Blocked[0m
+
+[0;32mI (11318) main: queue item size 0[0m
+[0;32mI (12318) main: Task Blocked[0m
+
+[0;32mI (12318) main: queue item size 0[0m
+[0;32mI (12438) main: Read DHT: Temp 24.3, Hum 50.8[0m
+[0;32mI (12438) main: Item Receive: 24[0m
+[0;32mI (13318) main: Task Blocked[0m
+
+[0;32mI (13318) main: queue item size 0[0m
+[0;32mI (14318) main: Task Blocked[0m
+
+[0;32mI (14318) main: queue item size 0[0m
+[0;32mI (14458) main: Read DHT: Temp 24.3, Hum 50.9[0m
+[0;32mI (14458) main: Item Receive: 24[0m
+[0;32mI (15318) main: Task Blocked[0m
+
+[0;32mI (15318) main: queue item size 0[0m
+[0;32mI (16318) main: Task Blocked[0m
+
+[0;32mI (16318) main: queue item size 0[0m
+[0;32mI (16478) main: Read DHT: Temp 24.3, Hum 53.8[0m
+[0;32mI (16478) main: Item Receive: 24[0m
+[0;32mI (17318) main: Task Blocked[0m
+
+[0;32mI (17318) main: queue item size 0[0m
+[0;32mI (18318) main: Task Blocked[0m
+
+[0;32mI (18318) main: queue item size 0[0m
+[0;32mI (18498) main: Read DHT: Temp 24.3, Hum 52.4[0m
+[0;32mI (18498) main: Item Receive: 24[0m
+[0;32mI (19318) main: Task Blocked[0m
+
+[0;32mI (19318) main: queue item size 0[0m
+[0;32mI (20318) main: Task Blocked[0m
+
+[0;32mI (20318) main: queue item size 0[0m
+[0;32mI (20518) main: Read DHT: Temp 24.3, Hum 51.3[0m
+[0;32mI (20518) main: Item Receive: 24[0m
+[0;32mI (21318) main: Task Blocked[0m
+
+[0;32mI (21318) main: queue item size 0[0m
+[0;32mI (22318) main: Task Blocked[0m
+
+[0;32mI (22318) main: queue item size 0[0m
+[0;32mI (22538) main: Read DHT: Temp 24.3, Hum 50.9[0m
+[0;32mI (22538) main: Item Receive: 24[0m
+[0;32mI (23318) main: Task Blocked[0m
+
+[0;32mI (23318) main: queue item size 0[0m
+[0;32mI (24318) main: Task Blocked[0m
+
+[0;32mI (24318) main: queue item size 0[0m
+[0;32mI (24558) main: Read DHT: Temp 24.3, Hum 50.7[0m
+[0;32mI (24558) main: Item Receive: 24[0m
+[0;32mI (25318) main: Task Blocked[0m
+
+[0;32mI (25318) main: queue item size 0[0m
+[0;32mI (26318) main: Task Blocked[0m
+
+[0;32mI (26318) main: queue item size 0[0m
+[0;32mI (26578) main: Read DHT: Temp 24.3, Hum 50.6[0m
+[0;32mI (26578) main: Item Receive: 24[0m
+[0;32mI (27318) main: Task Blocked[0m
+
+[0;32mI (27318) main: queue item size 0[0m
+[0;32mI (28318) main: Task Blocked[0m
+
+[0;32mI (28318) main: queue item size 0[0m
+[0;32mI (28598) main: Read DHT: Temp 24.3, Hum 50.5[0m
+[0;32mI (28598) main: Item Receive: 24[0m
+[0;32mI (29318) main: Task Blocked[0m
+
+[0;32mI (29318) main: queue item size 0[0m
+[0;32mI (30318) main: Task Blocked[0m
+
+[0;32mI (30318) main: queue item size 0[0m
+[0;32mI (30618) main: Read DHT: Temp 24.3, Hum 50.5[0m
+[0;32mI (30618) main: Item Receive: 24[0m
+[0;32mI (31318) main: Task Blocked[0m
+
+[0;32mI (31318) main: queue item size 0[0m
+[0;32mI (32318) main: Task Blocked[0m
+
+[0;32mI (32318) main: queue item size 0[0m
+[0;32mI (32638) main: Read DHT: Temp 24.3, Hum 50.6[0m
+[0;32mI (32638) main: Item Receive: 24[0m
+[0;32mI (33318) main: Task Blocked[0m
+
+[0;32mI (33318) main: queue item size 0[0m
+[0;32mI (34318) main: Task Blocked[0m
+
+[0;32mI (34318) main: queue item size 0[0m
+[0;32mI (34658) main: Read DHT: Temp 24.3, Hum 50.9[0m
+[0;32mI (34658) main: Item Receive: 24[0m
+[0;32mI (35318) main: Task Blocked[0m
+
+[0;32mI (35318) main: queue item size 0[0m
+[0;32mI (36318) main: Task Blocked[0m
+
+[0;32mI (36318) main: queue item size 0[0m
+[0;32mI (36678) main: Read DHT: Temp 24.3, Hum 51.5[0m
+[0;32mI (36678) main: Item Receive: 24[0m
+[0;32mI (37318) main: Task Blocked[0m
+
+[0;32mI (37318) main: queue item size 0[0m
+[0;32mI (38318) main: Task Blocked[0m
+
+[0;32mI (38318) main: queue item size 0[0m
+[0;32mI (38698) main: Read DHT: Temp 24.3, Hum 51.4[0m
+[0;32mI (38698) main: Item Receive: 24[0m
+[0;32mI (39318) main: Task Blocked[0m
+
+[0;32mI (39318) main: queue item size 0[0m
+[0;32mI (40318) main: Task Blocked[0m
+
+[0;32mI (40318) main: queue item size 0[0m
+[0;32mI (40718) main: Read DHT: Temp 24.3, Hum 50.9[0m
+[0;32mI (40718) main: Item Receive: 24[0m
+[0;32mI (41318) main: Task Blocked[0m
+
+[0;32mI (41318) main: queue item size 0[0m
+[0;32mI (42318) main: Task Blocked[0m
+
+[0;32mI (42318) main: queue item size 0[0m
+[0;32mI (42738) main: Read DHT: Temp 24.3, Hum 50.9[0m
+[0;32mI (42738) main: Item Receive: 24[0m
+[0;32mI (43318) main: Task Blocked[0m
+
+[0;32mI (43318) main: queue item size 0[0m
+[0;32mI (44318) main: Task Blocked[0m
+
+[0;32mI (44318) main: queue item size 0[0m
+[0;32mI (44758) main: Read DHT: Temp 24.3, Hum 51.3[0m
+[0;32mI (44758) main: Item Receive: 24[0m
+[0;32mI (45318) main: Task Blocked[0m
+
+[0;32mI (45318) main: queue item size 0[0m
+[0;32mI (46318) main: Task Blocked[0m
+
+[0;32mI (46318) main: queue item size 0[0m
+[0;32mI (46778) main: Read DHT: Temp 24.3, Hum 51.8[0m
+[0;32mI (46778) main: Item Receive: 24[0m
+[0;32mI (47318) main: Task Blocked[0m
+
+[0;32mI (47318) main: queue item size 0[0m
+[0;32mI (48318) main: Task Blocked[0m
+
+[0;32mI (48318) main: queue item size 0[0m
+[0;32mI (48798) main: Read DHT: Temp 24.3, Hum 51.7[0m
+[0;32mI (48798) main: Item Receive: 24[0m
+[0;32mI (49318) main: Task Blocked[0m
+
+[0;32mI (49318) main: queue item size 0[0m
+[0;32mI (50318) main: Task Blocked[0m
+
+[0;32mI (50318) main: queue item size 0[0m
+[0;32mI (50818) main: Read DHT: Temp 24.3, Hum 51.5[0m
+[0;32mI (50818) main: Item Receive: 24[0m
+[0;32mI (51318) main: Task Blocked[0m
+
+[0;32mI (51318) main: queue item size 0[0m
+[0;32mI (52318) main: Task Blocked[0m
+
+[0;32mI (52318) main: queue item size 0[0m
+[0;32mI (52838) main: Read DHT: Temp 24.3, Hum 51.4[0m
+[0;32mI (52838) main: Item Receive: 24[0m
+[0;32mI (53318) main: Task Blocked[0m
+
+[0;32mI (53318) main: queue item size 0[0m
+[0;32mI (54318) main: Task Blocked[0m
+
+[0;32mI (54318) main: queue item size 0[0m
+[0;32mI (54858) main: Read DHT: Temp 24.3, Hum 51.0[0m
+[0;32mI (54858) main: Item Receive: 24[0m
+[0;32mI (55318) main: Task Blocked[0m
+
+[0;32mI (55318) main: queue item size 0[0m
+[0;32mI (56318) main: Task Blocked[0m
+
+[0;32mI (56318) main: queue item size 0[0m
+[0;32mI (56878) main: Read DHT: Temp 24.3, Hum 51.1[0m
+[0;32mI (56878) main: Item Receive: 24[0m
+[0;32mI (57318) main: Task Blocked[0m
+
+[0;32mI (57318) main: queue item size 0[0m
+[0;32mI (58318) main: Task Blocked[0m
+
+[0;32mI (58318) main: queue item size 0[0m
+[0;32mI (58898) main: Read DHT: Temp 24.3, Hum 51.5[0m
+[0;32mI (58898) main: Item Receive: 24[0m
+[0;32mI (59318) main: Task Blocked[0m
+
+[0;32mI (59318) main: queue item size 0[0m
+[0;32mI (60318) main: Task Blocked[0m
+
+[0;32mI (60318) main: queue item size 0[0m
+[0;32mI (60918) main: Read DHT: Temp 24.3, Hum 51.9[0m
+[0;32mI (60918) main: Item Receive: 24[0m
+[0;32mI (61318) main: Task Blocked[0m
+
+[0;32mI (61318) main: queue item size 0[0m
+[0;32mI (62318) main: Task Blocked[0m
+
+[0;32mI (62318) main: queue item size 0[0m
+[0;32mI (62938) main: Read DHT: Temp 24.3, Hum 51.6[0m
+[0;32mI (62938) main: Item Receive: 24[0m
+[0;32mI (63318) main: Task Blocked[0m
+
+[0;32mI (63318) main: queue item size 0[0m
+[0;32mI (64318) main: Task Blocked[0m
+
+[0;32mI (64318) main: queue item size 0[0m
+[0;32mI (64958) main: Read DHT: Temp 24.3, Hum 51.1[0m
+[0;32mI (64958) main: Item Receive: 24[0m
+[0;32mI (65318) main: Task Blocked[0m
+
+[0;32mI (65318) main: queue item size 0[0m
+[0;32mI (66318) main: Task Blocked[0m
+
+[0;32mI (66318) main: queue item size 0[0m
+[0;32mI (66978) main: Read DHT: Temp 24.3, Hum 51.1[0m
+[0;32mI (66978) main: Item Receive: 24[0m
+[0;32mI (67318) main: Task Blocked[0m
+
+[0;32mI (67318) main: queue item size 0[0m
+[0;32mI (68318) main: Task Blocked[0m
+
+[0;32mI (68318) main: queue item size 0[0m
+[0;32mI (68998) main: Read DHT: Temp 24.3, Hum 51.2[0m
+[0;32mI (68998) main: Item Receive: 24[0m
+[0;32mI (69318) main: Task Blocked[0m
+
+[0;32mI (69318) main: queue item size 0[0m
+[0;32mI (70318) main: Task Blocked[0m
+
+[0;32mI (70318) main: queue item size 0[0m
+[0;32mI (71018) main: Read DHT: Temp 24.3, Hum 51.0[0m
+[0;32mI (71018) main: Item Receive: 24[0m
+[0;32mI (71318) main: Task Blocked[0m
+
+[0;32mI (71318) main: queue item size 0[0m
+[0;32mI (72318) main: Task Blocked[0m
+
+[0;32mI (72318) main: queue item size 0[0m
+[0;32mI (73038) main: Read DHT: Temp 24.3, Hum 50.9[0m
+[0;32mI (73038) main: Item Receive: 24[0m
+[0;32mI (73318) main: Task Blocked[0m
+
+[0;32mI (73318) main: queue item size 0[0m
+[0;32mI (74318) main: Task Blocked[0m
+
+[0;32mI (74318) main: queue item size 0[0m
+[0;32mI (75058) main: Read DHT: Temp 24.3, Hum 51.1[0m
+[0;32mI (75058) main: Item Receive: 24[0m
+[0;32mI (75318) main: Task Blocked[0m
+
+[0;32mI (75318) main: queue item size 0[0m
+[0;32mI (76318) main: Task Blocked[0m
+
+[0;32mI (76318) main: queue item size 0[0m
+[0;32mI (77078) main: Read DHT: Temp 24.2, Hum 51.4[0m
+[0;32mI (77078) main: Item Receive: 24[0m
+[0;32mI (77318) main: Task Blocked[0m
+
+[0;32mI (77318) main: queue item size 0[0m
+[0;32mI (78318) main: Task Blocked[0m
+
+[0;32mI (78318) main: queue item size 0[0m
+[0;32mI (79098) main: Read DHT: Temp 24.3, Hum 51.4[0m
+[0;32mI (79098) main: Item Receive: 24[0m
+[0;32mI (79318) main: Task Blocked[0m
+
+[0;32mI (79318) main: queue item size 0[0m
+[0;32mI (80318) main: Task Blocked[0m
+
+[0;32mI (80318) main: queue item size 0[0m
+[0;32mI (81118) main: Read DHT: Temp 24.4, Hum 56.0[0m
+[0;32mI (81118) main: Item Receive: 24[0m
+[0;32mI (81318) main: Task Blocked[0m
+
+[0;32mI (81318) main: queue item size 0[0m
+[0;32mI (82318) main: Task Blocked[0m
+
+[0;32mI (82318) main: queue item size 0[0m
+[0;32mI (83138) main: Read DHT: Temp 25.1, Hum 86.5[0m
+[0;32mI (83138) main: Item Receive: 25[0m
+[0;32mI (83318) main: Task Blocked[0m
+
+[0;32mI (83318) main: queue item size 0[0m
+[0;32mI (84318) main: Task Blocked[0m
+
+[0;32mI (84318) main: queue item size 0[0m
+[0;32mI (85158) main: Read DHT: Temp 25.2, Hum 91.5[0m
+[0;32mI (85158) main: Item Receive: 25[0m
+[0;32mI (85318) main: Task Blocked[0m
+
+[0;32mI (85318) main: queue item size 0[0m
+[0;32mI (86318) main: Task Blocked[0m
+
+[0;32mI (86318) main: queue item size 0[0m
+[1;31mE (87178) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (87178) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (87318) main: Task Blocked[0m
+
+[0;32mI (87318) main: queue item size 0[0m
+[0;32mI (88318) main: Task Blocked[0m
+
+[0;32mI (88318) main: queue item size 0[0m
+[0;32mI (89198) main: Read DHT: Temp 25.0, Hum 93.1[0m
+[0;32mI (89198) main: Item Receive: 25[0m
+[0;32mI (89318) main: Task Blocked[0m
+
+[0;32mI (89318) main: queue item size 0[0m
+[0;32mI (90318) main: Task Blocked[0m
+
+[0;32mI (90318) main: queue item size 0[0m
+[1;31mE (91218) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (91218) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (91318) main: Task Blocked[0m
+
+[0;32mI (91318) main: queue item size 0[0m
+[0;32mI (92318) main: Task Blocked[0m
+
+[0;32mI (92318) main: queue item size 0[0m
+[1;31mE (93238) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (93238) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (93318) main: Task Blocked[0m
+
+[0;32mI (93318) main: queue item size 0[0m
+[0;32mI (94318) main: Task Blocked[0m
+
+[0;32mI (94318) main: queue item size 0[0m
+[1;31mE (95258) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (95258) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (95318) main: Task Blocked[0m
+
+[0;32mI (95318) main: queue item size 0[0m
+[0;32mI (96318) main: Task Blocked[0m
+
+[0;32mI (96318) main: queue item size 0[0m
+[1;31mE (97278) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (97278) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (97318) main: Task Blocked[0m
+
+[0;32mI (97318) main: queue item size 0[0m
+[0;32mI (98318) main: Task Blocked[0m
+
+[0;32mI (98318) main: queue item size 0[0m
+[1;31mE (99298) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (99298) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (99318) main: Task Blocked[0m
+
+[0;32mI (99318) main: queue item size 0[0m
+[0;32mI (100318) main: Task Blocked[0m
+
+[0;32mI (100318) main: queue item size 0[0m
+[1;31mE (101318) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (101318) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (101318) main: Task Blocked[0m
+
+[0;32mI (101318) main: queue item size 0[0m
+[0;32mI (102318) main: Task Blocked[0m
+
+[0;32mI (102318) main: queue item size 0[0m
+[0;32mI (103318) main: Task Running[0m
+
+[0;32mI (103318) main: queue item size 0[0m
+[1;31mE (103338) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (103338) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (104318) main: Task Blocked[0m
+
+[0;32mI (104318) main: queue item size 0[0m
+[0;32mI (105318) main: Task Blocked[0m
+
+[0;32mI (105318) main: queue item size 0[0m
+[1;31mE (105358) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (105358) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (106318) main: Task Blocked[0m
+
+[0;32mI (106318) main: queue item size 0[0m
+[0;32mI (107318) main: Task Blocked[0m
+
+[0;32mI (107318) main: queue item size 0[0m
+[1;31mE (107378) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (107378) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (108318) main: Task Blocked[0m
+
+[0;32mI (108318) main: queue item size 0[0m
+[0;32mI (109318) main: Task Blocked[0m
+
+[0;32mI (109318) main: queue item size 0[0m
+[1;31mE (109398) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (109398) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (110318) main: Task Blocked[0m
+
+[0;32mI (110318) main: queue item size 0[0m
+[0;32mI (111318) main: Task Blocked[0m
+
+[0;32mI (111318) main: queue item size 0[0m
+[1;31mE (111418) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (111418) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (112318) main: Task Blocked[0m
+
+[0;32mI (112318) main: queue item size 0[0m
+[0;32mI (113318) main: Task Blocked[0m
+
+[0;32mI (113318) main: queue item size 0[0m
+[1;31mE (113438) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (113438) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (114318) main: Task Blocked[0m
+
+[0;32mI (114318) main: queue item size 0[0m
+[0;32mI (115318) main: Task Blocked[0m
+
+[0;32mI (115318) main: queue item size 0[0m
+[1;31mE (115458) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (115458) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (116318) main: Task Blocked[0m
+
+[0;32mI (116318) main: queue item size 0[0m
+[0;32mI (117318) main: Task Blocked[0m
+
+[0;32mI (117318) main: queue item size 0[0m
+[1;31mE (117478) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (117478) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (118318) main: Task Blocked[0m
+
+[0;32mI (118318) main: queue item size 0[0m
+[0;32mI (119318) main: Task Blocked[0m
+
+[0;32mI (119318) main: queue item size 0[0m
+[1;31mE (119498) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (119498) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (120318) main: Task Blocked[0m
+
+[0;32mI (120318) main: queue item size 0[0m
+[0;32mI (121318) main: Task Blocked[0m
+
+[0;32mI (121318) main: queue item size 0[0m
+[1;31mE (121518) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (121518) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (122318) main: Task Blocked[0m
+
+[0;32mI (122318) main: queue item size 0[0m
+[0;32mI (123318) main: Task Blocked[0m
+
+[0;32mI (123318) main: queue item size 0[0m
+[1;31mE (123538) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (123538) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (124318) main: Task Blocked[0m
+
+[0;32mI (124318) main: queue item size 0[0m
+[0;32mI (125318) main: Task Blocked[0m
+
+[0;32mI (125318) main: queue item size 0[0m
+[1;31mE (125558) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (125558) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (126318) main: Task Blocked[0m
+
+[0;32mI (126318) main: queue item size 0[0m
+[0;32mI (127318) main: Task Blocked[0m
+
+[0;32mI (127318) main: queue item size 0[0m
+[1;31mE (127578) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (127578) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (128318) main: Task Blocked[0m
+
+[0;32mI (128318) main: queue item size 0[0m
+[0;32mI (129318) main: Task Blocked[0m
+
+[0;32mI (129318) main: queue item size 0[0m
+[1;31mE (129598) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (129598) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (130318) main: Task Blocked[0m
+
+[0;32mI (130318) main: queue item size 0[0m
+[0;32mI (131318) main: Task Blocked[0m
+
+[0;32mI (131318) main: queue item size 0[0m
+[1;31mE (131618) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (131618) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (132318) main: Task Blocked[0m
+
+[0;32mI (132318) main: queue item size 0[0m
+[0;32mI (133318) main: Task Blocked[0m
+
+[0;32mI (133318) main: queue item size 0[0m
+[1;31mE (133638) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (133638) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (134318) main: Task Blocked[0m
+
+[0;32mI (134318) main: queue item size 0[0m
+[0;32mI (135318) main: Task Blocked[0m
+
+[0;32mI (135318) main: queue item size 0[0m
+[1;31mE (135658) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (135658) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (136318) main: Task Blocked[0m
+
+[0;32mI (136318) main: queue item size 0[0m
+[0;32mI (137318) main: Task Blocked[0m
+
+[0;32mI (137318) main: queue item size 0[0m
+[1;31mE (137678) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (137678) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (138318) main: Task Blocked[0m
+
+[0;32mI (138318) main: queue item size 0[0m
+[0;32mI (139318) main: Task Blocked[0m
+
+[0;32mI (139318) main: queue item size 0[0m
+[1;31mE (139698) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (139698) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (140318) main: Task Blocked[0m
+
+[0;32mI (140318) main: queue item size 0[0m
+[0;32mI (141318) main: Task Blocked[0m
+
+[0;32mI (141318) main: queue item size 0[0m
+[1;31mE (141718) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (141718) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (142318) main: Task Blocked[0m
+
+[0;32mI (142318) main: queue item size 0[0m
+[0;32mI (143318) main: Task Blocked[0m
+
+[0;32mI (143318) main: queue item size 0[0m
+[1;31mE (143738) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (143738) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (144318) main: Task Blocked[0m
+
+[0;32mI (144318) main: queue item size 0[0m
+[0;32mI (145318) main: Task Blocked[0m
+
+[0;32mI (145318) main: queue item size 0[0m
+[1;31mE (145758) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (145758) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (146318) main: Task Blocked[0m
+
+[0;32mI (146318) main: queue item size 0[0m
+[0;32mI (147318) main: Task Blocked[0m
+
+[0;32mI (147318) main: queue item size 0[0m
+[1;31mE (147778) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (147778) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (148318) main: Task Blocked[0m
+
+[0;32mI (148318) main: queue item size 0[0m
+[0;32mI (149318) main: Task Blocked[0m
+
+[0;32mI (149318) main: queue item size 0[0m
+[1;31mE (149798) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (149798) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (150318) main: Task Blocked[0m
+
+[0;32mI (150318) main: queue item size 0[0m
+[0;32mI (151318) main: Task Blocked[0m
+
+[0;32mI (151318) main: queue item size 0[0m
+[1;31mE (151818) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (151818) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (152318) main: Task Blocked[0m
+
+[0;32mI (152318) main: queue item size 0[0m
+[0;32mI (153318) main: Task Blocked[0m
+
+[0;32mI (153318) main: queue item size 0[0m
+[1;31mE (153838) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (153838) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (154318) main: Task Blocked[0m
+
+[0;32mI (154318) main: queue item size 0[0m
+[0;32mI (155318) main: Task Blocked[0m
+
+[0;32mI (155318) main: queue item size 0[0m
+[1;31mE (155858) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (155858) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (156318) main: Task Blocked[0m
+
+[0;32mI (156318) main: queue item size 0[0m
+[0;32mI (157318) main: Task Blocked[0m
+
+[0;32mI (157318) main: queue item size 0[0m
+[1;31mE (157878) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (157878) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (158318) main: Task Blocked[0m
+
+[0;32mI (158318) main: queue item size 0[0m
+[0;32mI (159318) main: Task Blocked[0m
+
+[0;32mI (159318) main: queue item size 0[0m
+[1;31mE (159898) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (159898) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (160318) main: Task Blocked[0m
+
+[0;32mI (160318) main: queue item size 0[0m
+[0;32mI (161318) main: Task Blocked[0m
+
+[0;32mI (161318) main: queue item size 0[0m
+[1;31mE (161918) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (161918) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (162318) main: Task Blocked[0m
+
+[0;32mI (162318) main: queue item size 0[0m
+[0;32mI (163318) main: Task Blocked[0m
+
+[0;32mI (163318) main: queue item size 0[0m
+[1;31mE (163938) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (163938) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (164318) main: Task Blocked[0m
+
+[0;32mI (164318) main: queue item size 0[0m
+[0;32mI (165318) main: Task Blocked[0m
+
+[0;32mI (165318) main: queue item size 0[0m
+[1;31mE (165958) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (165958) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (166318) main: Task Blocked[0m
+
+[0;32mI (166318) main: queue item size 0[0m
+[0;32mI (167318) main: Task Blocked[0m
+
+[0;32mI (167318) main: queue item size 0[0m
+[1;31mE (167978) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (167978) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (168318) main: Task Blocked[0m
+
+[0;32mI (168318) main: queue item size 0[0m
+[0;32mI (169318) main: Task Blocked[0m
+
+[0;32mI (169318) main: queue item size 0[0m
+[1;31mE (169998) dht: Initialization error, problem in phase 'C'[0m
+[1;31mE (169998) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (170318) main: Task Blocked[0m
+
+[0;32mI (170318) main: queue item size 0[0m
+[0;32mI (171318) main: Task Blocked[0m
+
+[0;32mI (171318) main: queue item size 0[0m
+[1;31mE (172018) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (172018) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (172318) main: Task Blocked[0m
+
+[0;32mI (172318) main: queue item size 0[0m
+[0;32mI (173318) main: Task Blocked[0m
+
+[0;32mI (173318) main: queue item size 0[0m
+[0;32mI (174038) main: Read DHT: Temp 18.2, Hum 61.3[0m
+[0;32mI (174038) main: Item Receive: 18[0m
+[0;32mI (174318) main: Task Blocked[0m
+
+[0;32mI (174318) main: queue item size 0[0m
+[0;32mI (175318) main: Task Blocked[0m
+
+[0;32mI (175318) main: queue item size 0[0m
+[0;32mI (176058) main: Read DHT: Temp 18.3, Hum 65.6[0m
+[0;32mI (176058) main: Item Receive: 18[0m
+[0;32mI (176318) main: Task Blocked[0m
+
+[0;32mI (176318) main: queue item size 0[0m
+[0;32mI (177318) main: Task Blocked[0m
+
+[0;32mI (177318) main: queue item size 0[0m
+[1;31mE (178078) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (178078) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (178318) main: Task Blocked[0m
+
+[0;32mI (178318) main: queue item size 0[0m
+[0;32mI (179318) main: Task Blocked[0m
+
+[0;32mI (179318) main: queue item size 0[0m
+[1;31mE (180098) dht: Initialization error, problem in phase 'B'[0m
+[1;31mE (180098) main: Could not read data from sensor: ESP_ERR_TIMEOUT[0m
+[0;32mI (180318) main: Task Blocked[0m
+
+[0;32mI (180318) main: queue item size 0[0m
+[0;32mI (181318) main: Task Blocked[0m
+
+[0;32mI (181318) main: queue item size 0[0m
+[0;32mI (182118) main: Read DHT: Temp 18.4, Hum 68.4[0m
+[0;32mI (182118) main: Item Receive: 18[0m
+[0;32mI (182318) main: Task Blocked[0m
+
+[0;32mI (182318) main: queue item size 0[0m
+[0;32mI (183318) main: Task Blocked[0m
+
+[0;32mI (183318) main: queue item size 0[0m
+[0;32mI (184138) main: Read DHT: Temp 18.5, Hum 69.4[0m
+[0;32mI (184138) main: Item Receive: 18[0m
+[0;32mI (184318) main: Task Blocked[0m
+
+[0;32mI (184318) main: queue item size 0[0m
+[0;32mI (185318) main: Task Blocked[0m
+
+[0;32mI (185318) main: queue item size 0[0m
+[0;32mI (186158) main: Read DHT: Temp 18.5, Hum 69.2[0m
+[0;32mI (186158) main: Item Receive: 18[0m
+[0;32mI (186318) main: Task Blocked[0m
+
+[0;32mI (186318) main: queue item size 0[0m
+[0;32mI (187318) main: Task Blocked[0m
+
+[0;32mI (187318) main: queue item size 0[0m
+[0;32mI (188178) main: Read DHT: Temp 18.6, Hum 69.1[0m
+[0;32mI (188178) main: Item Receive: 18[0m
+[0;32mI (188318) main: Task Blocked[0m
+
+[0;32mI (188318) main: queue item size 0[0m
+[0;32mI (189318) main: Task Blocked[0m
+
+[0;32mI (189318) main: queue item size 0[0m
+[0;32mI (190198) main: Read DHT: Temp 18.7, Hum 68.1[0m
+[0;32mI (190198) main: Item Receive: 18[0m
+[0;32mI (190318) main: Task Blocked[0m
+
+[0;32mI (190318) main: queue item size 0[0m
+[0;32mI (191318) main: Task Blocked[0m
+
+[0;32mI (191318) main: queue item size 0[0m
+[0;32mI (192218) main: Read DHT: Temp 18.8, Hum 67.0[0m
+[0;32mI (192218) main: Item Receive: 18[0m
+[0;32mI (192318) main: Task Blocked[0m
+
+[0;32mI (192318) main: queue item size 0[0m
+[0;32mI (193318) main: Task Blocked[0m
+
+[0;32mI (193318) main: queue item size 0[0m
+[0;32mI (194238) main: Read DHT: Temp 18.8, Hum 66.1[0m
+[0;32mI (194238) main: Item Receive: 18[0m
+[0;32mI (194318) main: Task Blocked[0m
+
+[0;32mI (194318) main: queue item size 0[0m
+[0;32mI (195318) main: Task Blocked[0m
+
+[0;32mI (195318) main: queue item size 0[0m
+[0;32mI (196258) main: Read DHT: Temp 18.9, Hum 65.5[0m
+[0;32mI (196258) main: Item Receive: 18[0m
+[0;32mI (196318) main: Task Blocked[0m
+
+[0;32mI (196318) main: queue item size 0[0m
+[0;32mI (197318) main: Task Blocked[0m
+
+[0;32mI (197318) main: queue item size 0[0m
+[0;32mI (198278) main: Read DHT: Temp 19.0, Hum 65.5[0m
+[0;32mI (198278) main: Item Receive: 19[0m
+[0;32mI (198318) main: Task Blocked[0m
+
+[0;32mI (198318) main: queue item size 0[0m
+[0;32mI (199318) main: Task Blocked[0m
+
+[0;32mI (199318) main: queue item size 0[0m
+[0;32mI (200298) main: Read DHT: Temp 19.0, Hum 66.4[0m
+[0;32mI (200298) main: Item Receive: 19[0m
+[0;32mI (200318) main: Task Blocked[0m
+
+[0;32mI (200318) main: queue item size 0[0m
+[0;32mI (201318) main: Task Blocked[0m
+
+[0;32mI (201318) main: queue item size 0[0m
+[0;32mI (202318) main: Read DHT: Temp 19.1, Hum 67.7[0m
+[0;32mI (202318) main: Item Receive: 19[0m
+[0;32mI (202318) main: Task Blocked[0m
+
+[0;32mI (202318) main: queue item size 0[0m
+[0;32mI (203318) main: Task Blocked[0m
+
+[0;32mI (203318) main: queue item size 0[0m
+[0;32mI (204318) main: Task Running[0m
+
+[0;32mI (204318) main: queue item size 0[0m
+[0;32mI (204338) main: Read DHT: Temp 19.2, Hum 67.8[0m
+[0;32mI (204338) main: Item Receive: 19[0m
+[0;32mI (205318) main: Task Blocked[0m
+
+[0;32mI (205318) main: queue item size 0[0m
+[0;32mI (206318) main: Task Blocked[0m
+
+[0;32mI (206318) main: queue item size 0[0m
+[0;32mI (206358) main: Read DHT: Temp 19.3, Hum 66.8[0m
+[0;32mI (206358) main: Item Receive: 19[0m
+[0;32mI (207318) main: Task Blocked[0m
+
+[0;32mI (207318) main: queue item size 0[0m
+[0;32mI (208318) main: Task Blocked[0m
+
+[0;32mI (208318) main: queue item size 0[0m
+[0;32mI (208378) main: Read DHT: Temp 19.3, Hum 65.8[0m
+[0;32mI (208378) main: Item Receive: 19[0m
+[0;32mI (209318) main: Task Blocked[0m
+
+[0;32mI (209318) main: queue item size 0[0m
+[0;32mI (210318) main: Task Blocked[0m
+
+[0;32mI (210318) main: queue item size 0[0m
+[0;32mI (210398) main: Read DHT: Temp 19.4, Hum 64.8[0m
+[0;32mI (210398) main: Item Receive: 19[0m
+[0;32mI (211318) main: Task Blocked[0m
+
+[0;32mI (211318) main: queue item size 0[0m
+[0;32mI (212318) main: Task Blocked[0m
+
+[0;32mI (212318) main: queue item size 0[0m
+[0;32mI (212418) main: Read DHT: Temp 19.5, Hum 64.1[0m
+[0;32mI (212418) main: Item Receive: 19[0m
+[0;32mI (213318) main: Task Blocked[0m
+
+[0;32mI (213318) main: queue item size 0[0m
+[0;32mI (214318) main: Task Blocked[0m
+
+[0;32mI (214318) main: queue item size 0[0m
+[0;32mI (214438) main: Read DHT: Temp 19.5, Hum 63.7[0m
+[0;32mI (214438) main: Item Receive: 19[0m
+[0;32mI (215318) main: Task Blocked[0m
+
+[0;32mI (215318) main: queue item size 0[0m
+[0;32mI (216318) main: Task Blocked[0m
+
+[0;32mI (216318) main: queue item size 0[0m
+[0;32mI (216458) main: Read DHT: Temp 19.6, Hum 63.1[0m
+[0;32mI (216458) main: Item Receive: 19[0m
+[0;32mI (217318) main: Task Blocked[0m
+
+[0;32mI (217318) main: queue item size 0[0m
+[0;32mI (218318) main: Task Blocked[0m
+
+[0;32mI (218318) main: queue item size 0[0m
+[0;32mI (218478) main: Read DHT: Temp 19.6, Hum 62.5[0m
+[0;32mI (218478) main: Item Receive: 19[0m
+[0;32mI (219318) main: Task Blocked[0m
+
+[0;32mI (219318) main: queue item size 0[0m
+[0;32mI (220318) main: Task Blocked[0m
+
+[0;32mI (220318) main: queue item size 0[0m
+[0;32mI (220498) main: Read DHT: Temp 19.7, Hum 62.1[0m
+[0;32mI (220498) main: Item Receive: 19[0m
+[0;32mI (221318) main: Task Blocked[0m
+
+[0;32mI (221318) main: queue item size 0[0m
+[0;32mI (222318) main: Task Blocked[0m
+
+[0;32mI (222318) main: queue item size 0[0m
+[0;32mI (222518) main: Read DHT: Temp 19.8, Hum 61.8[0m
+[0;32mI (222518) main: Item Receive: 19[0m
+[0;32mI (223318) main: Task Blocked[0m
+
+[0;32mI (223318) main: queue item size 0[0m
+[0;32mI (224318) main: Task Blocked[0m
+
+[0;32mI (224318) main: queue item size 0[0m
+[0;32mI (224538) main: Read DHT: Temp 19.8, Hum 61.6[0m
+[0;32mI (224538) main: Item Receive: 19[0m
+[0;32mI (225318) main: Task Blocked[0m
+
+[0;32mI (225318) main: queue item size 0[0m
+[0;32mI (226318) main: Task Blocked[0m
+
+[0;32mI (226318) main: queue item size 0[0m
+[0;32mI (226558) main: Read DHT: Temp 19.9, Hum 61.5[0m
+[0;32mI (226558) main: Item Receive: 19[0m
+[0;32mI (227318) main: Task Blocked[0m
+
+[0;32mI (227318) main: queue item size 0[0m
+[0;32mI (228318) main: Task Blocked[0m
+
+[0;32mI (228318) main: queue item size 0[0m
+[0;32mI (228578) main: Read DHT: Temp 19.9, Hum 61.3[0m
+[0;32mI (228578) main: Item Receive: 19[0m
+[0;32mI (229318) main: Task Blocked[0m
+
+[0;32mI (229318) main: queue item size 0[0m
+[0;32mI (230318) main: Task Blocked[0m
+
+[0;32mI (230318) main: queue item size 0[0m
+[0;32mI (230598) main: Read DHT: Temp 20.0, Hum 61.0[0m
+[0;32mI (230598) main: Item Receive: 20[0m
+[0;32mI (231318) main: Task Blocked[0m
+
+[0;32mI (231318) main: queue item size 0[0m
+[0;32mI (232318) main: Task Blocked[0m
+
+[0;32mI (232318) main: queue item size 0[0m
+[0;32mI (232618) main: Read DHT: Temp 20.0, Hum 60.7[0m
+[0;32mI (232618) main: Item Receive: 20[0m
+[0;32mI (233318) main: Task Blocked[0m
+
+[0;32mI (233318) main: queue item size 0[0m
+[0;32mI (234318) main: Task Blocked[0m
+
+[0;32mI (234318) main: queue item size 0[0m
+[0;32mI (234638) main: Read DHT: Temp 20.1, Hum 60.5[0m
+[0;32mI (234638) main: Item Receive: 20[0m
+[0;32mI (235318) main: Task Blocked[0m
+
+[0;32mI (235318) main: queue item size 0[0m
+[0;32mI (236318) main: Task Blocked[0m
+
+[0;32mI (236318) main: queue item size 0[0m
+[0;32mI (236658) main: Read DHT: Temp 20.1, Hum 60.3[0m
+[0;32mI (236658) main: Item Receive: 20[0m
+[0;32mI (237318) main: Task Blocked[0m
+
+[0;32mI (237318) main: queue item size 0[0m
+[0;32mI (238318) main: Task Blocked[0m
+
+[0;32mI (238318) main: queue item size 0[0m
+[0;32mI (238678) main: Read DHT: Temp 20.2, Hum 60.2[0m
+[0;32mI (238678) main: Item Receive: 20[0m
+[0;32mI (239318) main: Task Blocked[0m
+
+[0;32mI (239318) main: queue item size 0[0m
+[0;32mI (240318) main: Task Blocked[0m
+
+[0;32mI (240318) main: queue item size 0[0m
+[0;32mI (240698) main: Read DHT: Temp 20.2, Hum 60.1[0m
+[0;32mI (240698) main: Item Receive: 20[0m
+[0;32mI (241318) main: Task Blocked[0m
+
+[0;32mI (241318) main: queue item size 0[0m
+[0;32mI (242318) main: Task Blocked[0m
+
+[0;32mI (242318) main: queue item size 0[0m
+[0;32mI (242718) main: Read DHT: Temp 20.3, Hum 60.1[0m
+[0;32mI (242718) main: Item Receive: 20[0m
+[0;32mI (243318) main: Task Blocked[0m
+
+[0;32mI (243318) main: queue item size 0[0m
+[0;32mI (244318) main: Task Blocked[0m
+
+[0;32mI (244318) main: queue item size 0[0m
+[0;32mI (244738) main: Read DHT: Temp 20.3, Hum 60.5[0m
+[0;32mI (244738) main: Item Receive: 20[0m
+[0;32mI (245318) main: Task Blocked[0m
+
+[0;32mI (245318) main: queue item size 0[0m
+[0;32mI (246318) main: Task Blocked[0m
+
+[0;32mI (246318) main: queue item size 0[0m
+[0;32mI (246758) main: Read DHT: Temp 20.4, Hum 60.6[0m
+[0;32mI (246758) main: Item Receive: 20[0m
+[0;32mI (247318) main: Task Blocked[0m
+
+[0;32mI (247318) main: queue item size 0[0m
+[0;32mI (248318) main: Task Blocked[0m
+
+[0;32mI (248318) main: queue item size 0[0m
+[0;32mI (248778) main: Read DHT: Temp 20.4, Hum 60.3[0m
+[0;32mI (248778) main: Item Receive: 20[0m
+[0;32mI (249318) main: Task Blocked[0m
+
+[0;32mI (249318) main: queue item size 0[0m
+[0;32mI (250318) main: Task Blocked[0m
+
+[0;32mI (250318) main: queue item size 0[0m
+[0;32mI (250798) main: Read DHT: Temp 20.5, Hum 60.3[0m
+[0;32mI (250798) main: Item Receive: 20[0m
+[0;32mI (251318) main: Task Blocked[0m
+
+[0;32mI (251318) main: queue item size 0[0m
+[0;32mI (252318) main: Task Blocked[0m
+
+[0;32mI (252318) main: queue item size 0[0m
+[0;32mI (252818) main: Read DHT: Temp 20.5, Hum 60.5[0m
+[0;32mI (252818) main: Item Receive: 20[0m
+[0;32mI (253318) main: Task Blocked[0m
+
+[0;32mI (253318) main: queue item size 0[0m
+[0;32mI (254318) main: Task Blocked[0m
+
+[0;32mI (254318) main: queue item size 0[0m
+[0;32mI (254838) main: Read DHT: Temp 20.6, Hum 60.5[0m
+[0;32mI (254838) main: Item Receive: 20[0m
+[0;32mI (255318) main: Task Blocked[0m
+
+[0;32mI (255318) main: queue item size 0[0m
+[0;32mI (256318) main: Task Blocked[0m
+
+[0;32mI (256318) main: queue item size 0[0m
+[0;32mI (256858) main: Read DHT: Temp 20.6, Hum 61.1[0m
+[0;32mI (256858) main: Item Receive: 20[0m
+[0;32mI (257318) main: Task Blocked[0m
+
+[0;32mI (257318) main: queue item size 0[0m
+[0;32mI (258318) main: Task Blocked[0m
+
+[0;32mI (258318) main: queue item size 0[0m
+[0;32mI (258878) main: Read DHT: Temp 20.6, Hum 60.5[0m
+[0;32mI (258878) main: Item Receive: 20[0m
+[0;32mI (259318) main: Task Blocked[0m
+
+[0;32mI (259318) main: queue item size 0[0m
+[0;32mI (260318) main: Task Blocked[0m
+
+[0;32mI (260318) main: queue item size 0[0m
+[0;32mI (260898) main: Read DHT: Temp 20.7, Hum 59.8[0m
+[0;32mI (260898) main: Item Receive: 20[0m
+[0;32mI (261318) main: Task Blocked[0m
+
+[0;32mI (261318) main: queue item size 0[0m
+[0;32mI (262318) main: Task Blocked[0m
+
+[0;32mI (262318) main: queue item size 0[0m
+[0;32mI (262918) main: Read DHT: Temp 20.7, Hum 59.5[0m
+[0;32mI (262918) main: Item Receive: 20[0m
+[0;32mI (263318) main: Task Blocked[0m
+
+[0;32mI (263318) main: queue item size 0[0m
+[0;32mI (264318) main: Task Blocked[0m
+
+[0;32mI (264318) main: queue item size 0[0m
+[0;32mI (264938) main: Read DHT: Temp 20.8, Hum 59.3[0m
+[0;32mI (264938) main: Item Receive: 20[0m
+[0;32mI (265318) main: Task Blocked[0m
+
+[0;32mI (265318) main: queue item size 0[0m
+[0;32mI (266318) main: Task Blocked[0m
+
+[0;32mI (266318) main: queue item size 0[0m
+[0;32mI (266958) main: Read DHT: Temp 20.8, Hum 59.1[0m
+[0;32mI (266958) main: Item Receive: 20[0m
+[0;32mI (267318) main: Task Blocked[0m
+
+[0;32mI (267318) main: queue item size 0[0m
+[0;32mI (268318) main: Task Blocked[0m
+
+[0;32mI (268318) main: queue item size 0[0m
+[0;32mI (268978) main: Read DHT: Temp 20.9, Hum 59.2[0m
+[0;32mI (268978) main: Item Receive: 20[0m
+[0;32mI (269318) main: Task Blocked[0m
+
+[0;32mI (269318) main: queue item size 0[0m
+[0;32mI (270318) main: Task Blocked[0m
+
+[0;32mI (270318) main: queue item size 0[0m
+[0;32mI (270998) main: Read DHT: Temp 20.9, Hum 59.4[0m
+[0;32mI (270998) main: Item Receive: 20[0m
+[0;32mI (271318) main: Task Blocked[0m
+
+[0;32mI (271318) main: queue item size 0[0m
