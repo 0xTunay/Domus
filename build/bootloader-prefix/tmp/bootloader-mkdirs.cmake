@@ -6,22 +6,22 @@ cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 # If CMAKE_DISABLE_SOURCE_CHANGES is set to true and the source directory is an
 # existing directory in our source tree, calling file(MAKE_DIRECTORY) on it
 # would cause a fatal error, even though it would be a no-op.
-if(NOT EXISTS "/home/tunay/esp-idf-v5.4.1/components/bootloader/subproject")
-  file(MAKE_DIRECTORY "/home/tunay/esp-idf-v5.4.1/components/bootloader/subproject")
+if(NOT EXISTS "/Users/apple/esp-idf-v5.5.1/components/bootloader/subproject")
+  file(MAKE_DIRECTORY "/Users/apple/esp-idf-v5.5.1/components/bootloader/subproject")
 endif()
 file(MAKE_DIRECTORY
-  "/home/tunay/Documents/practice/build/bootloader"
-  "/home/tunay/Documents/practice/build/bootloader-prefix"
-  "/home/tunay/Documents/practice/build/bootloader-prefix/tmp"
-  "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp"
-  "/home/tunay/Documents/practice/build/bootloader-prefix/src"
-  "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp"
+  "/Users/apple/CLionProjects/sec/build/bootloader"
+  "/Users/apple/CLionProjects/sec/build/bootloader-prefix"
+  "/Users/apple/CLionProjects/sec/build/bootloader-prefix/tmp"
+  "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp"
+  "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src"
+  "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()

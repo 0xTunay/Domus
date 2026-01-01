@@ -5,6 +5,8 @@
 #ifndef _APP_MAIN_H
 #define _APP_MAIN_H
 #include "driver/gpio.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 #define LED_GPIO GPIO_NUM_2
 
@@ -19,5 +21,12 @@ void ledInit(void) {
 }
 void LedON()  { gpio_set_level(LED_GPIO, 1); }
 void LedOFF() { gpio_set_level(LED_GPIO, 0); }
-
+void ledBlink() {
+	for (;;) {
+		gpio_set_level(LED_GPIO, 1);
+		vTaskDelay(pdMS_TO_TICKS(350));
+		gpio_set_level(LED_GPIO, 0);
+		vTaskDelay(pdMS_TO_TICKS(350));
+	}
+}
 #endif //_APP_MAIN_H

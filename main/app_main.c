@@ -23,7 +23,7 @@ static const char *TAG = "main";
 
 void vSensorTask(void *pvParameter) {
     float humidity = 0, temperature = 0;
-
+    BaseType_t xReturn;
 
     for (;;) {
         esp_err_t ret = dht_read_float_data(DHT_TYPE_AM2301, DHT_GPIO, &humidity, &temperature);
@@ -32,34 +32,36 @@ void vSensorTask(void *pvParameter) {
             ESP_LOGI(TAG, "Read DHT: Temp %.1f, Hum %.1f", temperature, humidity);
 
             uint32_t data_to_send = (uint32_t)temperature;
+            xReturn = xQueueOverwrite((void*)SensorTaskHandle, (void*)&data_to_send);
+            if (xReturn == pdTRUE) {
+                ESP_LOGI(TAG, "Item Send: %" PRIu32, data_to_send);
 
-            if (xQueueSend(SensorTaskQueueHandle, &data_to_send, pdMS_TO_TICKS(10)) != pdPASS) {
-                ESP_LOGE(TAG, "Failed to send data to queue");
             }
         } else {
             ESP_LOGE(TAG, "Could not read data from sensor: %s", esp_err_to_name(ret));
         }
-
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
 }
-
+/*
+ * https://docs.espressif.com/projects/esp-techpedia/en/latest/esp-friends/get-started/basic-concepts/common-freertos-api/queue-management.html#receiving-data
+ */
 void ControlTask(void *pvParameter) {
     BaseType_t xReturn;
     uint32_t receiver = 0;
 
     for (;;) {
 
-        xReturn = xQueueReceive(SensorTaskQueueHandle, (void*)&receiver, portMAX_DELAY);
+        xReturn = xQueueReceive((void*)SensorTaskQueueHandle, (void*)&receiver, portMAX_DELAY);
         if (xReturn == pdTRUE) {
             ESP_LOGI(TAG, "Item Receive: %" PRIu32, receiver);
         } else {
             ESP_LOGE(TAG, "Item Receive Error");
         }
-        if (receiver >= 20) {
+        if (receiver >= 22) {
             LedON();
         } else {
-            LedOFF();
+            ledBlink();
         }
     }
 }

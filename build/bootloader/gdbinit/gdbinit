@@ -1,2 +1,2 @@
-source /home/tunay/Documents/practice/build/bootloader/gdbinit/symbols
-source /home/tunay/Documents/practice/build/bootloader/gdbinit/connect
+source /Users/apple/CLionProjects/sec/build/bootloader/gdbinit/symbols
+source /Users/apple/CLionProjects/sec/build/bootloader/gdbinit/connect

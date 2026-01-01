@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/home/tunay/Documents/practice/build/CMakeFiles/bootloader"
+			"file" : "/Users/apple/CLionProjects/sec/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/CMakeFiles/bootloader.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "/home/tunay/Documents/practice/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "/Users/apple/CLionProjects/sec/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		}
 	],
 	"target" : 

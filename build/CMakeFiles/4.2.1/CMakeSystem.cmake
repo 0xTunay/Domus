@@ -1,9 +1,9 @@
-set(CMAKE_HOST_SYSTEM "Linux-6.18.1-arch1-2")
-set(CMAKE_HOST_SYSTEM_NAME "Linux")
-set(CMAKE_HOST_SYSTEM_VERSION "6.18.1-arch1-2")
-set(CMAKE_HOST_SYSTEM_PROCESSOR "x86_64")
+set(CMAKE_HOST_SYSTEM "Darwin-24.2.0")
+set(CMAKE_HOST_SYSTEM_NAME "Darwin")
+set(CMAKE_HOST_SYSTEM_VERSION "24.2.0")
+set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
 
-include("/home/tunay/esp-idf-v5.4.1/tools/cmake/toolchain-esp32.cmake")
+include("/Users/apple/esp-idf-v5.5.1/tools/cmake/toolchain-esp32.cmake")
 
 set(CMAKE_SYSTEM "Generic")
 set(CMAKE_SYSTEM_NAME "Generic")
