@@ -128,3 +128,19 @@ void app_main(void)
         ESP_LOGE(TAG, "Failed to create vTaskMonitor");
             }
 }
+
+// *
+// ===============================================================================================================
+//                                        ESPRESSIF DOCUMANTION
+//
+//  https://docs.espressif.com/projects/esp-techpedia/en/latest/esp-friends/get-started/basic-concepts/common-freertos-api/queue-management.html#receiving-data
+//
+//
+// ===============================================================================================================
+// */
+
+//*
+// TODO
+// Create the best solution for blink
+//
+//*//
