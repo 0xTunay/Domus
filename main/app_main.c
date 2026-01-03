@@ -10,59 +10,61 @@
 #include "app_main.h"
 #include "dht.h"
 
-#define ITEM_SIZE 5
-
-#define DHT_GPIO GPIO_NUM_19
 
 
-QueueHandle_t SensorTaskQueueHandle = NULL;
+QueueHandle_t SensorQueueHandle = NULL;
 TaskHandle_t SensorTaskHandle = NULL;
 
 static const char *TAG = "main";
 
 
 void vSensorTask(void *pvParameter) {
-    float humidity = 0, temperature = 0;
-    BaseType_t xReturn;
+    float humidity = 0.0f, temperature = 0.0f;
 
     for (;;) {
         esp_err_t ret = dht_read_float_data(DHT_TYPE_AM2301, DHT_GPIO, &humidity, &temperature);
 
         if (ret == ESP_OK) {
+            uint32_t temp_x10 = (uint32_t)(temperature * 10.0f);
+
             ESP_LOGI(TAG, "Read DHT: Temp %.1f, Hum %.1f", temperature, humidity);
 
-            uint32_t data_to_send = (uint32_t)temperature;
-            xReturn = xQueueOverwrite((void*)SensorTaskHandle, (void*)&data_to_send);
-            if (xReturn == pdTRUE) {
-                ESP_LOGI(TAG, "Item Send: %" PRIu32, data_to_send);
+           /*  uint16_t data_to_send = (uint32_t)temperature; */
+                if (uxQueueMessagesWaiting(SensorQueueHandle) == ITEM_SIZE) {
+                uint32_t dummy = 0;
+                xQueueReceive(SensorQueueHandle, &dummy, 0);
+                ESP_LOGI(TAG, "Queue restart");
+            }
 
+            if (xQueueSend(SensorQueueHandle, &temp_x10, 0) != pdTRUE) {
+                ESP_LOGW(TAG, "Restart queue");
             }
         } else {
-            ESP_LOGE(TAG, "Could not read data from sensor: %s", esp_err_to_name(ret));
+            ESP_LOGE(TAG, "DHT read failed: %s", esp_err_to_name(ret));
         }
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
 }
-/*
- * https://docs.espressif.com/projects/esp-techpedia/en/latest/esp-friends/get-started/basic-concepts/common-freertos-api/queue-management.html#receiving-data
- */
 void ControlTask(void *pvParameter) {
-    BaseType_t xReturn;
-    uint32_t receiver = 0;
+    /* BaseType_t xReturn; */
+    uint32_t temp_x10 = 0;
 
     for (;;) {
+        if (xQueueReceive(SensorQueueHandle, &temp_x10, portMAX_DELAY) == pdTRUE) {
 
-        xReturn = xQueueReceive((void*)SensorTaskQueueHandle, (void*)&receiver, portMAX_DELAY);
-        if (xReturn == pdTRUE) {
-            ESP_LOGI(TAG, "Item Receive: %" PRIu32, receiver);
-        } else {
-            ESP_LOGE(TAG, "Item Receive Error");
+            ESP_LOGI(TAG, "Received temp: %" PRIu32 " (%.1f C)",
+                     temp_x10, temp_x10 / 10.0f);
+
+            if (temp_x10 >= 320) {
+                LedON();
+                BlinkEnable = false;
+            } else {
+                BlinkEnable = true;
+
+            }
         }
-        if (receiver >= 22) {
-            LedON();
-        } else {
-            ledBlink();
-        }
+
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
 
@@ -83,20 +85,21 @@ void vTaskMonitor(void *pvParameter) {
             ESP_LOGW(TAG, "Sensor null");
         }
 
-        UBaseType_t used = uxQueueMessagesWaiting(SensorTaskQueueHandle);
+        UBaseType_t used = uxQueueMessagesWaiting(SensorQueueHandle);
         ESP_LOGI(TAG,"queue item size %d", (unsigned)used);
 
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
+
 void app_main(void)
 {
-    ledInit();
+    LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
 
-    SensorTaskQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
-    if (SensorTaskQueueHandle == NULL) {
+    SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
+    if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
         return;
     }
@@ -105,16 +108,16 @@ void app_main(void)
                 "vSensorTask",
                 configMINIMAL_STACK_SIZE * 2,
                 NULL,
-                5,
+                4,
                 &SensorTaskHandle) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create vSensorTask");
     }
 
     if (xTaskCreate(ControlTask,
                 "ControlTask",
-                2048,
+                4096,
                 NULL,
-                5,
+                6,
                 NULL) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create ControlTask");
     }

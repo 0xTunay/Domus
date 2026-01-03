@@ -5,3 +5,5 @@ managed_components
 .envrc
 .idea
 build/
+sdkconfig.old
+build/bootloader
