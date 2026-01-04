@@ -6,14 +6,17 @@
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include <inttypes.h>
+#include "freertos/semphr.h"
 
 #include "app_main.h"
 #include "dht.h"
+#include "display_lvgl.h"
 
 
-
+TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
 TaskHandle_t SensorTaskHandle = NULL;
+SemaphoreHandle_t SensorSemaphoreHandle = NULL;
 
 static const char *TAG = "main";
 
@@ -97,13 +100,22 @@ void app_main(void)
     LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
+    ESP_ERROR_CHECK(DisplayLvglInit());
 
     SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
     if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
         return;
     }
-
+if (xTaskCreate(
+            DisplayLvglTask,
+            "DisplayLvglTask",
+            4096,
+            NULL,
+            5,
+            NULL) != pdPASS) {
+        ESP_LOGE(TAG, "Failed to create DisplayLvglTask");
+    }
     if (xTaskCreate(vSensorTask,
                 "vSensorTask",
                 configMINIMAL_STACK_SIZE * 2,

@@ -8,3 +8,6 @@ build/
 sdkconfig.old
 build/bootloader
 build
+esp-idf-lib-
+.vscode/
+.DS_Store
