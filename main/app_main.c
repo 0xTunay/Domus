@@ -55,12 +55,12 @@ void ControlTask(void *pvParameter) {
             ESP_LOGI(TAG, "Received temp: %" PRIu32 " (%.1f C)",
                      temp_x10, temp_x10 / 10.0f);
 
-            if (temp_x10 >= 320) {
-                LedON();
+            if (temp_x10 >= 280) {
                 BlinkEnable = false;
+                LedON();
             } else {
                 BlinkEnable = true;
-
+                LedOFF();
             }
         }
 
@@ -130,6 +130,14 @@ void app_main(void)
             NULL) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create vTaskMonitor");
             }
+    if (xTaskCreate(LedBlink,
+                "LedBlink",
+                configMINIMAL_STACK_SIZE * 2,
+                NULL,
+                3,
+                NULL) != pdPASS) {
+        ESP_LOGE(TAG, "Failed to create LedBlink");
+                }
 }
 
 // *
@@ -144,6 +152,5 @@ void app_main(void)
 
 //*
 // TODO
-// Create the best solution for blink
-//
+// add mutex
 //*//
