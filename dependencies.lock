@@ -1,26 +1,9 @@
 dependencies:
   esp-idf-lib/dht:
-    component_hash: 
-      a0a1b26519566809041bc8fccf754e3ee9b25f73b0decbdc51bfd16143dedd66
-    dependencies:
-    - name: esp-idf-lib/esp_idf_lib_helpers
-      registry_url: https://components.espressif.com
-      require: private
-      version: '*'
+    dependencies: []
     source:
-      registry_url: https://components.espressif.com/
-      type: service
-    targets:
-    - esp32
-    - esp32c2
-    - esp32c3
-    - esp32c5
-    - esp32c6
-    - esp32c61
-    - esp32h2
-    - esp32p4
-    - esp32s2
-    - esp32s3
+      path: /Users/apple/CLionProjects/sec/managed_components/esp-idf-lib__dht
+      type: local
     version: 1.2.0
   esp-idf-lib/esp_idf_lib_helpers:
     dependencies: []
@@ -30,79 +13,25 @@ dependencies:
       type: local
     version: 1.4.0
   espressif/esp_lcd_touch:
-    component_hash: 
-      3f85a7d95af876f1a6ecca8eb90a81614890d0f03a038390804e5a77e2caf862
-    dependencies:
-    - name: idf
-      require: private
-      version: '>=4.4.2'
+    dependencies: []
     source:
-      registry_url: https://components.espressif.com
-      type: service
+      path: 
+        /Users/apple/CLionProjects/sec/managed_components/espressif__esp_lcd_touch
+      type: local
     version: 1.2.1
   espressif/esp_lvgl_adapter:
-    component_hash: 
-      6d140bc0168a8a9727e59e6270fdb0dafaabc6f7a4dfbf7f02863bc43118375c
-    dependencies:
-    - name: espressif/button
-      registry_url: https://components.espressif.com
-      require: public
-      rules:
-      - if: $CONFIG{ESP_LVGL_ADAPTER_ENABLE_BUTTON} == True
-      version: 4.*
-    - name: espressif/esp_lcd_touch
-      registry_url: https://components.espressif.com
-      require: public
-      version: 1.*
-    - name: espressif/esp_lv_decoder
-      registry_url: https://components.espressif.com
-      require: public
-      rules:
-      - if: $CONFIG{ESP_LVGL_ADAPTER_ENABLE_DECODER} == True
-      version: 0.*
-    - name: espressif/esp_lv_fs
-      registry_url: https://components.espressif.com
-      require: public
-      rules:
-      - if: $CONFIG{ESP_LVGL_ADAPTER_ENABLE_FS} == True
-      version: 1.*
-    - name: espressif/freetype
-      registry_url: https://components.espressif.com
-      require: public
-      rules:
-      - if: $CONFIG{ESP_LVGL_ADAPTER_ENABLE_FREETYPE} == True
-      version: 2.*
-    - name: espressif/knob
-      registry_url: https://components.espressif.com
-      require: public
-      rules:
-      - if: $CONFIG{ESP_LVGL_ADAPTER_ENABLE_KNOB} == True
-      version: 1.*
-    - name: idf
-      require: private
-      version: '>=5.5'
-    - name: lvgl/lvgl
-      registry_url: https://components.espressif.com
-      require: private
-      version: '>=8,<10'
+    dependencies: []
     source:
-      registry_url: https://components.espressif.com/
-      type: service
+      path: 
+        /Users/apple/CLionProjects/sec/managed_components/espressif__esp_lvgl_adapter
+      type: local
     version: 0.2.0
   espressif/esp_lvgl_port:
-    component_hash: 
-      f872401524cb645ee6ff1c9242d44fb4ddcfd4d37d7be8b9ed3f4e85a404efcd
-    dependencies:
-    - name: idf
-      require: private
-      version: '>=5.1'
-    - name: lvgl/lvgl
-      registry_url: https://components.espressif.com
-      require: public
-      version: '>=8,<10'
+    dependencies: []
     source:
-      registry_url: https://components.espressif.com/
-      type: service
+      path: 
+        /Users/apple/CLionProjects/sec/managed_components/espressif__esp_lvgl_port
+      type: local
     version: 2.7.0
   idf:
     source:
@@ -118,10 +47,12 @@ dependencies:
     version: 9.4.0
 direct_dependencies:
 - esp-idf-lib/dht
+- esp-idf-lib/esp_idf_lib_helpers
+- espressif/esp_lcd_touch
 - espressif/esp_lvgl_adapter
 - espressif/esp_lvgl_port
 - idf
 - lvgl/lvgl
-manifest_hash: c1294d35d4c2584e62278a30c27a2db3ee533006540ff81cb24989944541374c
+manifest_hash: a929c34a4bded33162c2333ee262fc91341ccfd47eb9816fb42591c173de1e19
 target: esp32
 version: 2.0.0

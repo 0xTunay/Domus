@@ -23,37 +23,39 @@ static const char *TAG = "main";
 
 void vSensorTask(void *pvParameter) {
     float humidity = 0.0f, temperature = 0.0f;
+    int error_count = 0;
+    const int max_errors = 5;
 
-    for (;;) {
+    while (error_count < max_errors) {
         esp_err_t ret = dht_read_float_data(DHT_TYPE_AM2301, DHT_GPIO, &humidity, &temperature);
 
         if (ret == ESP_OK) {
+            error_count = 0;
             uint32_t temp_x10 = (uint32_t)(temperature * 10.0f);
 
-            ESP_LOGI(TAG, "Read DHT: Temp %.1f, Hum %.1f", temperature, humidity);
-
-           /*  uint16_t data_to_send = (uint32_t)temperature; */
-                if (uxQueueMessagesWaiting(SensorQueueHandle) == ITEM_SIZE) {
-                uint32_t dummy = 0;
-                xQueueReceive(SensorQueueHandle, &dummy, 0);
-                ESP_LOGI(TAG, "Queue restart");
-            }
+            ESP_LOGI(TAG, "Read DHT: Temp %.1f", temperature);
 
             if (xQueueSend(SensorQueueHandle, &temp_x10, 0) != pdTRUE) {
-                ESP_LOGW(TAG, "Restart queue");
+                ESP_LOGW(TAG, "Queue full, skipping data");
             }
         } else {
-            ESP_LOGE(TAG, "DHT read failed: %s", esp_err_to_name(ret));
+            error_count++;
+            ESP_LOGE(TAG, "DHT failed (%d/%d): %s", error_count, max_errors, esp_err_to_name(ret));
         }
+
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
+
+    ESP_LOGE(TAG, "Sensor fatal error. Task deleting...");
+    vTaskDelete(NULL);
 }
 void ControlTask(void *pvParameter) {
     /* BaseType_t xReturn; */
     uint32_t temp_x10 = 0;
-
-    for (;;) {
-        if (xQueueReceive(SensorQueueHandle, &temp_x10, portMAX_DELAY) == pdTRUE) {
+    const TickType_t xTicksToWait = pdMS_TO_TICKS(5000);
+    bool SensorEnable = true;
+    while (SensorEnable) {
+        if (xQueueReceive(SensorQueueHandle, &temp_x10, xTicksToWait) == pdTRUE) {
 
             ESP_LOGI(TAG, "Received temp: %" PRIu32 " (%.1f C)",
                      temp_x10, temp_x10 / 10.0f);
@@ -65,10 +67,15 @@ void ControlTask(void *pvParameter) {
                 BlinkEnable = true;
                 LedOFF();
             }
+        } else {
+            ESP_LOGW(TAG, "Error: data from sensor not receined ");
+            SensorEnable = false;
         }
 
-        vTaskDelay(pdMS_TO_TICKS(10));
+       /* vTaskDelay(pdMS_TO_TICKS(10)); */
     }
+    vTaskDelete(NULL);
+
 }
 
 void vTaskMonitor(void *pvParameter) {
