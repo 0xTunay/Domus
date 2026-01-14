@@ -1,42 +1,279 @@
 dependencies:
   esp-idf-lib/dht:
-    dependencies: []
+    component_hash: 
+      a0a1b26519566809041bc8fccf754e3ee9b25f73b0decbdc51bfd16143dedd66
+    dependencies:
+    - name: esp-idf-lib/esp_idf_lib_helpers
+      registry_url: https://components.espressif.com
+      require: private
+      version: '*'
     source:
-      path: /Users/apple/CLionProjects/sec/managed_components/esp-idf-lib__dht
-      type: local
+      registry_url: https://components.espressif.com/
+      type: service
+    targets:
+    - esp32
+    - esp32c2
+    - esp32c3
+    - esp32c5
+    - esp32c6
+    - esp32c61
+    - esp32h2
+    - esp32p4
+    - esp32s2
+    - esp32s3
     version: 1.2.0
   esp-idf-lib/esp_idf_lib_helpers:
     dependencies: []
     source:
       path: 
-        /Users/apple/CLionProjects/sec/components/esp-idf-lib__esp_idf_lib_helpers
+        /home/tunay/Documents/sec/components/esp-idf-lib__esp_idf_lib_helpers
       type: local
     version: 1.4.0
+  espressif/button:
+    component_hash: 
+      fccb18c37f1cfe0797b74a53a44d3f400f5fd01f4993b40052dfb7f401915089
+    dependencies:
+    - name: espressif/cmake_utilities
+      registry_url: https://components.espressif.com
+      require: private
+      version: '*'
+    - name: idf
+      require: private
+      version: '>=4.0'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 4.1.5
+  espressif/cmake_utilities:
+    component_hash: 
+      351350613ceafba240b761b4ea991e0f231ac7a9f59a9ee901f751bddc0bb18f
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.1'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 0.5.3
   espressif/esp_lcd_touch:
-    dependencies: []
+    component_hash: 
+      3f85a7d95af876f1a6ecca8eb90a81614890d0f03a038390804e5a77e2caf862
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4.2'
     source:
-      path: 
-        /Users/apple/CLionProjects/sec/managed_components/espressif__esp_lcd_touch
-      type: local
+      registry_url: https://components.espressif.com
+      type: service
     version: 1.2.1
+  espressif/esp_lv_decoder:
+    component_hash: 
+      0eb7b2bceaf73484ef80f5004337ee31617b2450a3d40621812998a47e7dd349
+    dependencies:
+    - name: espressif/esp_new_jpeg
+      registry_url: https://components.espressif.com
+      require: private
+      version: 0.*
+    - name: espressif/libpng
+      registry_url: https://components.espressif.com
+      require: private
+      version: 1.*
+    - name: idf
+      require: private
+      version: '>=5.3'
+    - name: lvgl/lvgl
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=8,<10'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    targets:
+    - esp32
+    - esp32s2
+    - esp32s3
+    - esp32p4
+    - esp32c2
+    - esp32c3
+    - esp32c5
+    - esp32c6
+    version: 0.3.2
+  espressif/esp_lv_fs:
+    component_hash: 
+      66896007884b817df34c964f9a114fff538ee2674e99fee7159162498b93f94b
+    dependencies:
+    - name: espressif/cmake_utilities
+      registry_url: https://components.espressif.com
+      require: private
+      version: 0.*
+    - name: espressif/esp_mmap_assets
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=1.2'
+    - name: idf
+      require: private
+      version: '>=4.4'
+    - name: lvgl/lvgl
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=8,<10'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.0.1
   espressif/esp_lvgl_adapter:
-    dependencies: []
+    component_hash: 
+      4ba6ad754b2533cb582bff81ba672ea7a682f4724a02327e57f96e9c73d330c2
+    dependencies:
+    - name: espressif/button
+      registry_url: https://components.espressif.com
+      require: public
+      version: 4.*
+    - name: espressif/esp_lcd_touch
+      registry_url: https://components.espressif.com
+      require: public
+      version: 1.*
+    - name: espressif/esp_lv_decoder
+      registry_url: https://components.espressif.com
+      require: public
+      version: 0.*
+    - name: espressif/esp_lv_fs
+      registry_url: https://components.espressif.com
+      require: public
+      version: 1.*
+    - name: espressif/freetype
+      registry_url: https://components.espressif.com
+      require: public
+      version: 2.*
+    - name: espressif/knob
+      registry_url: https://components.espressif.com
+      require: public
+      version: 1.*
+    - name: idf
+      require: private
+      version: '>=5.5'
+    - name: lvgl/lvgl
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=8,<10'
     source:
-      path: 
-        /Users/apple/CLionProjects/sec/managed_components/espressif__esp_lvgl_adapter
-      type: local
-    version: 0.2.0
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 0.3.0
   espressif/esp_lvgl_port:
+    component_hash: 
+      f872401524cb645ee6ff1c9242d44fb4ddcfd4d37d7be8b9ed3f4e85a404efcd
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.1'
+    - name: lvgl/lvgl
+      registry_url: https://components.espressif.com
+      require: public
+      version: '>=8,<10'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 2.7.0
+  espressif/esp_mmap_assets:
+    component_hash: 
+      91d785326b03db15e2f7f1314d8c976d38f21aa5759b570dcbbc89bcf247fd27
+    dependencies:
+    - name: espressif/cmake_utilities
+      registry_url: https://components.espressif.com
+      require: private
+      version: 0.*
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.4.0
+  espressif/esp_new_jpeg:
+    component_hash: 
+      e6af208a875abd0ecfc0213d3751a11b504b463ebde6930f24096047925fa5c1
     dependencies: []
     source:
-      path: 
-        /Users/apple/CLionProjects/sec/managed_components/espressif__esp_lvgl_port
-      type: local
-    version: 2.7.0
+      registry_url: https://components.espressif.com
+      type: service
+    targets:
+    - esp32
+    - esp32s2
+    - esp32s3
+    - esp32p4
+    - esp32c2
+    - esp32c3
+    - esp32c5
+    - esp32c6
+    version: 0.6.1
+  espressif/freetype:
+    component_hash: 
+      cd5e2d8458e6e8d73f1120ac474467cabb669d8ea4b25050bf6a348c1e89225e
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 2.13.3~1
+  espressif/knob:
+    component_hash: 
+      138ed090b4c9090a0a678f695b9d1884b368130c729b7333ed35bd7f4e8da80e
+    dependencies:
+    - name: espressif/cmake_utilities
+      registry_url: https://components.espressif.com
+      require: private
+      version: 0.*
+    - name: idf
+      require: private
+      version: '>=4.4.1'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.0.2
+  espressif/libpng:
+    component_hash: 
+      6eb993575e30da281faa37cecda2338ccf6d11dbd12234937758278d1c78b4fd
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    - name: espressif/zlib
+      registry_url: https://components.espressif.com
+      require: private
+      version: ^1.2.13
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.6.52
+  espressif/mqtt:
+    component_hash: 
+      ffdad5659706b4dc14bc63f8eb73ef765efa015bf7e9adf71c813d52a2dc9342
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.3'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.0.0
+  espressif/zlib:
+    component_hash: 
+      d901723af51f13fc8e5824f39f32239c847956e8fd951a05266588dc5cfbb9ae
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.3.1
   idf:
     source:
       type: idf
-    version: 5.5.1
+    version: 5.5.2
   lvgl/lvgl:
     component_hash: 
       17e68bfd21f0edf4c3ee838e2273da840bf3930e5dbc3bfa6c1190c3aed41f9f
@@ -47,12 +284,11 @@ dependencies:
     version: 9.4.0
 direct_dependencies:
 - esp-idf-lib/dht
-- esp-idf-lib/esp_idf_lib_helpers
-- espressif/esp_lcd_touch
 - espressif/esp_lvgl_adapter
 - espressif/esp_lvgl_port
+- espressif/mqtt
 - idf
 - lvgl/lvgl
-manifest_hash: a929c34a4bded33162c2333ee262fc91341ccfd47eb9816fb42591c173de1e19
+manifest_hash: 3fd34006c65f8e8d74e79334d5d88f2910fa4fcdb19de04678bcb5e40e7cc13f
 target: esp32
 version: 2.0.0
