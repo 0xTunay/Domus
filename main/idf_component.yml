@@ -7,6 +7,8 @@ dependencies:
   # # For components maintained by Espressif:
   # component: "~1.0.0"
   # # For 3rd party components:
+  protocol_examples_common:
+    path: ${IDF_PATH}/examples/common_components/protocol_examples_common
   # username/component: ">=1.0.0,<2.0.0"
   # username2/component2:
   #   version: "~1.0.0"
@@ -19,4 +21,3 @@ dependencies:
   espressif/esp_lvgl_port: '*'
   espressif/esp_lvgl_adapter: '*'
   espressif/mqtt: '*'
-  espressif/esp_tinyusb: ^1

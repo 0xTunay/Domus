@@ -7,11 +7,13 @@
 #include "freertos/queue.h"
 #include <inttypes.h>
 #include "freertos/semphr.h"
+#include "nvs_flash.h"
 
 #include "app_main.h"
 #include "dht.h"
-#include "display_lvgl.h"
+// #include "display_lvgl.h"
 #include "mosquitto.h"
+#include "wifi_manager.h"
 
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
@@ -107,22 +109,39 @@ void app_main(void)
     LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
-    ESP_ERROR_CHECK(DisplayLvglInit());
+   //  ESP_ERROR_CHECK(DisplayLvglInit());
+    /*====================== WIFI INIT ======================*/
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    if (CONFIG_LOG_MAXIMUM_LEVEL > CONFIG_LOG_DEFAULT_LEVEL) {
+        /* If you only want to open more logs in the wifi module, you need to make the max level greater than the default level,
+         * and call esp_log_level_set() before esp_wifi_init() to improve the log level of the wifi module. */
+        esp_log_level_set("wifi", CONFIG_LOG_MAXIMUM_LEVEL);
+    }
+
+    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
+    wifi_init_sta();
+    /*====================== WIFI INIT ======================*/
 
     SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
     if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
         return;
     }
-if (xTaskCreate(
-            DisplayLvglTask,
-            "DisplayLvglTask",
-            4096,
-            NULL,
-            5,
-            NULL) != pdPASS) {
-        ESP_LOGE(TAG, "Failed to create DisplayLvglTask");
-    }
+// if (xTaskCreate(
+//             DisplayLvglTask,
+//             "DisplayLvglTask",
+//             4096,
+//             NULL,
+//             5,
+//             NULL) != pdPASS) {
+//         ESP_LOGE(TAG, "Failed to create DisplayLvglTask");
+//     }
     if (xTaskCreate(vSensorTask,
                 "vSensorTask",
                 configMINIMAL_STACK_SIZE * 2,
