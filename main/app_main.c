@@ -11,7 +11,7 @@
 #include "app_main.h"
 #include "dht.h"
 #include "display_lvgl.h"
-
+#include "mosquitto.h"
 
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;

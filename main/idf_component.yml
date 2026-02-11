@@ -19,3 +19,4 @@ dependencies:
   espressif/esp_lvgl_port: '*'
   espressif/esp_lvgl_adapter: '*'
   espressif/mqtt: '*'
+  espressif/esp_tinyusb: ^1
