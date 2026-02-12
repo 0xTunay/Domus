@@ -11,3 +11,4 @@ build
 esp-idf-lib-
 .vscode/
 .DS_Store
+sad.txt
