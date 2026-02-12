@@ -247,7 +247,7 @@ dependencies:
     version: 1.0.2
   espressif/libpng:
     component_hash: 
-      0b469a05847b57f6357577c27bc101b09f22622e12ab09140dbe26f06274c438
+      8c426d10dc2bf187aafd84ef42834e1a44835ed08a293d78683eb7811d8f8c25
     dependencies:
     - name: idf
       require: private
@@ -259,7 +259,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.6.54
+    version: 1.6.55
   espressif/mqtt:
     component_hash: 
       ffdad5659706b4dc14bc63f8eb73ef765efa015bf7e9adf71c813d52a2dc9342

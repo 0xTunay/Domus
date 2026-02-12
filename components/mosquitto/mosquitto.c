@@ -9,8 +9,6 @@
 #include "nvs_flash.h"
 #include "esp_netif.h"
 
-#include "protocol_examples_common.h"
-
 #include "mqtt_client.h"
 
 static const char *TAG = "mosquitto";
@@ -23,7 +21,7 @@ static const char *TAG = "mosquitto";
 
 void mqtt_app_start(void) {
     const esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri = "mqtt://192.168.100.84:1883",
+        .broker.address.uri = CONFIG_BROKER_URL,
     };
 
     esp_mqtt_client_handle_t client = esp_mqtt_client_init(&mqtt_cfg);
