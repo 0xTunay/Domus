@@ -6,4 +6,16 @@ menu "MQTT Configuration"
         help
             URL of the broker to connect to
 
+    config MQTT_USERNAME
+        string "MQTT username"
+        default "iot"
+        help
+            Username for MQTT broker authentication
+
+    config MQTT_PASSWORD
+        string "MQTT password"
+        default "mosquitto"
+        help
+            Password for MQTT broker authentication
+
 endmenu

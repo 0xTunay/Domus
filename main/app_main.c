@@ -128,6 +128,10 @@ void app_main(void)
     wifi_init_sta();
     /*====================== WIFI INIT ======================*/
 
+    /*=== MQTT INIT === */
+    mqtt_app_start();
+
+    /*=== MQTT INIT === */
     SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
     if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");

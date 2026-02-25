@@ -2058,6 +2058,8 @@ CONFIG_WIFI_PROV_STA_ALL_CHANNEL_SCAN=y
 #
 # MQTT Configuration
 #
+CONFIG_MQTT_USERNAME="iot"
+CONFIG_MQTT_PASSWORD="mosquitto"
 # end of MQTT Configuration
 
 #
