@@ -9,6 +9,7 @@
 #include "freertos/task.h"
 
 #define LED_GPIO GPIO_NUM_2
+#define DHT_GPIO GPIO_NUM_19
 
 #define ITEM_SIZE 50
 
@@ -16,10 +17,10 @@ static bool BlinkEnable = false;
 
 void LedInit(void) {
 	gpio_config_t io_conf = {};
-	io_conf.intr_type = GPIO_INTR_DISABLE;
-	io_conf.mode = GPIO_MODE_OUTPUT;
-	io_conf.pin_bit_mask = 1ULL << LED_GPIO;
-	io_conf.pull_down_en = 0;
+	io_conf.intr_type = GPIO_INTR_DISABLE;          // без прерываний
+	io_conf.mode = GPIO_MODE_OUTPUT;                // выход
+	io_conf.pin_bit_mask = 1ULL << LED_GPIO;        // маска пина
+	io_conf.pull_down_en = 0;                       // без подтяжки вниз
 	io_conf.pull_up_en = 0;
 	gpio_config(&io_conf);
 }

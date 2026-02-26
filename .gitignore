@@ -13,6 +13,3 @@ build
 sad.txt
 sdkconfig
 Kconfig
-.cproject
-.project
-components/mosquitto/Kconfig
