@@ -21,3 +21,4 @@ dependencies:
   espressif/esp_lvgl_port: '*'
   espressif/esp_lvgl_adapter: '*'
   espressif/mqtt: '*'
+  espressif/bme280: =*
