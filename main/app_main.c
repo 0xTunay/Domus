@@ -8,13 +8,16 @@
 #include <inttypes.h>
 #include "freertos/semphr.h"
 #include "nvs_flash.h"
+#include "i2c_bus.h"
+#include "bme280.h"
 
-#include "app_main.h"
-#include "dht.h"
 // #include "display_lvgl.h"
+#include "app_main.h"
 #include "mosquitto.h"
 #include "wifi_manager.h"
+#include "BME280.h"
 
+#define DHT_GPIO 23
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
 TaskHandle_t SensorTaskHandle = NULL;
@@ -24,35 +27,37 @@ static const char *TAG = "main";
 
 
 void vSensorTask(void *pvParameter) {
-    float humidity = 0.0f, temperature = 0.0f;
+    float temperature = 0.0, humidity = 0.0, pressure = 0.0;
     int error_count = 0;
     const int max_errors = 5;
 
     while (error_count < max_errors) {
-        esp_err_t ret = dht_read_float_data(DHT_TYPE_AM2301, DHT_GPIO, &humidity, &temperature);
+        esp_err_t ret = ESP_OK;
+        ret |= bme280_read_temperature(bme280, &temperature);
+        ret |= bme280_read_humidity(bme280, &humidity);
+        ret |= bme280_read_pressure(bme280, &pressure);
 
         if (ret == ESP_OK) {
             error_count = 0;
             uint32_t temp_x10 = (uint32_t)(temperature * 10.0f);
 
-            ESP_LOGI(TAG, "Read DHT: Temp %.1f", temperature);
+            ESP_LOGI(TAG, "BME280: T=%.1f C, H=%.1f %%, P=%.1f hPa",
+                            temperature,humidity, pressure / 100.0f);
 
             if (xQueueSend(SensorQueueHandle, &temp_x10, 0) != pdTRUE) {
-                ESP_LOGW(TAG, "Queue full, skipping data");
+                ESP_LOGW(TAG, "Queue full, skip ");
+            } else {
+                error_count++;
+                ESP_LOGE(TAG, "BME280 read failed (%d/%d)", error_count, max_errors);
             }
-        } else {
-            error_count++;
-            ESP_LOGE(TAG, "DHT failed (%d/%d): %s", error_count, max_errors, esp_err_to_name(ret));
         }
-
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
 
-    ESP_LOGE(TAG, "Sensor fatal error. Task deleting...");
+    ESP_LOGE(TAG, "BME280 fatal error. Task deleting...");
     vTaskDelete(NULL);
 }
 void ControlTask(void *pvParameter) {
-    /* BaseType_t xReturn; */
     uint32_t temp_x10 = 0;
     const TickType_t xTicksToWait = pdMS_TO_TICKS(5000);
     bool SensorEnable = true;
@@ -130,8 +135,12 @@ void app_main(void)
 
     /*=== MQTT INIT === */
     mqtt_app_start();
-
     /*=== MQTT INIT === */
+
+    /*=== BME280 INIT === */
+    bme280_init();
+    /*=== BME280 INIT === */
+
     SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
     if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
