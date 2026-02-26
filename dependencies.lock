@@ -41,25 +41,6 @@ dependencies:
     - esp32s2
     - esp32s3
     version: 1.4.0
-  espressif/bme280:
-    component_hash: 
-      873d97d0bd30004f45d1653f078a4bafe39c1767e57d4bae0f0a13bc3a4d5e3d
-    dependencies:
-    - name: espressif/cmake_utilities
-      registry_url: https://components.espressif.com
-      require: private
-      version: 0.*
-    - name: espressif/i2c_bus
-      registry_url: https://components.espressif.com
-      require: public
-      version: '*'
-    - name: idf
-      require: private
-      version: '>=4.4'
-    source:
-      registry_url: https://components.espressif.com/
-      type: service
-    version: 0.1.1
   espressif/button:
     component_hash: 
       fccb18c37f1cfe0797b74a53a44d3f400f5fd01f4993b40052dfb7f401915089
@@ -193,7 +174,7 @@ dependencies:
     version: 0.3.2
   espressif/esp_lvgl_port:
     component_hash: 
-      b6360960f47b6776462e7092861b3ea66477ffb762a01baa0aecbb3d74cd50f4
+      88bbda87376ae20fabfbb5d794ed78d23b3b4a186ecfafecf2edbf06223fd6c9
     dependencies:
     - name: idf
       require: private
@@ -205,7 +186,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 2.7.2
+    version: 2.7.1
   espressif/esp_mmap_assets:
     component_hash: 
       91d785326b03db15e2f7f1314d8c976d38f21aa5759b570dcbbc89bcf247fd27
@@ -249,21 +230,6 @@ dependencies:
       registry_url: https://components.espressif.com
       type: service
     version: 2.13.3~1
-  espressif/i2c_bus:
-    component_hash: 
-      4e990dc11734316186b489b362c61d41f23f79d58bc169795cec215e528cba14
-    dependencies:
-    - name: espressif/cmake_utilities
-      registry_url: https://components.espressif.com
-      require: private
-      version: '*'
-    - name: idf
-      require: private
-      version: '>=4.0'
-    source:
-      registry_url: https://components.espressif.com
-      type: service
-    version: 1.5.0
   espressif/knob:
     component_hash: 
       138ed090b4c9090a0a678f695b9d1884b368130c729b7333ed35bd7f4e8da80e
@@ -322,12 +288,12 @@ dependencies:
     version: 5.5.2
   lvgl/lvgl:
     component_hash: 
-      184e532558c1c45fefed631f3e235423d22582aafb4630f3e8885c35281a49ae
+      17e68bfd21f0edf4c3ee838e2273da840bf3930e5dbc3bfa6c1190c3aed41f9f
     dependencies: []
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 9.5.0
+    version: 9.4.0
   protocol_examples_common:
     dependencies: []
     source:
@@ -337,13 +303,12 @@ dependencies:
     version: '*'
 direct_dependencies:
 - esp-idf-lib/dht
-- espressif/bme280
 - espressif/esp_lvgl_adapter
 - espressif/esp_lvgl_port
 - espressif/mqtt
 - idf
 - lvgl/lvgl
 - protocol_examples_common
-manifest_hash: 738521e34c63c338db551585a1032fdae526c8b233098368db038d61aae51d8d
+manifest_hash: 82cede7fb68c01c681e3e81ceff6ed8453edeef4ea13995fbd0eb197e1bf0a3f
 target: esp32
 version: 2.0.0
