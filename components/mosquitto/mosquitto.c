@@ -16,14 +16,13 @@ static const char *TAG = "mosquitto";
 #include "sdkconfig.h"
 #include "mosquitto.h"
 
-extern esp_mqtt_client_handle_t s_client = NULL;
+esp_mqtt_client_handle_t s_client = NULL;
 
 static void log_error_if_nonzero(const char *msg, int error_code) {
     if (error_code != 0 ) {
         ESP_LOGE(TAG, "%s: 0x%x", msg, error_code);
     }
 }
-
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base,
                                int32_t event_id, void *event_data) {
 
