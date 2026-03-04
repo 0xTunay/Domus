@@ -192,6 +192,16 @@ void app_main(void)
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
         return;
     }
+    PressQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
+    if (PressQueueHandle == NULL) {
+        ESP_LOGE(TAG, "Failed to create PressQueue");
+        return;
+    }
+    HymQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
+    if (HymQueueHandle == NULL) {
+        ESP_LOGE(TAG, "Failed to create HymQueue");
+        return;
+    }
 // if (xTaskCreate(
 //             DisplayLvglTask,
 //             "DisplayLvglTask",
