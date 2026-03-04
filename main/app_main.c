@@ -10,6 +10,7 @@
 #include "nvs_flash.h"
 #include "i2c_bus.h"
 #include "bme280.h"
+#include "mqtt_client.h"
 
 // #include "display_lvgl.h"
 #include "app_main.h"
@@ -20,6 +21,8 @@
 #define DHT_GPIO 23
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
+QueueHandle_t HymQueueHandle = NULL;
+QueueHandle_t PressQueueHandle = NULL;
 TaskHandle_t SensorTaskHandle = NULL;
 SemaphoreHandle_t SensorSemaphoreHandle = NULL;
 
@@ -59,14 +62,28 @@ void vSensorTask(void *pvParameter) {
 }
 void ControlTask(void *pvParameter) {
     uint32_t temp_x10 = 0;
+    uint32_t hum_x10 = 0;
+    uint32_t press_x10 = 0;
+
+    char payload[128];
     const TickType_t xTicksToWait = pdMS_TO_TICKS(5000);
     bool SensorEnable = true;
+
     while (SensorEnable) {
+
         if (xQueueReceive(SensorQueueHandle, &temp_x10, xTicksToWait) == pdTRUE) {
 
             ESP_LOGI(TAG, "Received temp: %" PRIu32 " (%.1f C)",
-                     temp_x10, temp_x10 / 10.0f);
+            temp_x10, temp_x10 / 10.0f);
+            float temperature = temp_x10 / 10.0f;
+            snprintf(payload, sizeof(payload), "%.1f", temperature);
 
+            if (s_client != NULL) {
+                int msg_id = esp_mqtt_client_publish(s_client, "sensors/temp", payload, 0, 1, 0);
+                ESP_LOGI(TAG, "Published temp: %s, msg_id=%d", payload, msg_id);
+            } else {
+                ESP_LOGW(TAG, "MQTT client not ready");
+            }
             if (temp_x10 >= 280) {
                 BlinkEnable = false;
                 LedON();
@@ -77,6 +94,35 @@ void ControlTask(void *pvParameter) {
         } else {
             ESP_LOGW(TAG, "Error: data from sensor not receined ");
             SensorEnable = false;
+        }
+
+        if (xQueueReceive(HymQueueHandle, &hum_x10, xTicksToWait) == pdTRUE) {
+            ESP_LOGI(TAG, "Received hum: %" PRIu32 " (%.1f C)",
+            hum_x10, hum_x10 / 10.0f);
+
+            float humidity = hum_x10 / 10.0f;
+            snprintf(payload, sizeof(payload), "%.1f", humidity);
+
+            if (s_client != NULL) {
+                int msg_id = esp_mqtt_client_publish(s_client, "sensors/pressure", payload, 0, 1, 0);
+                ESP_LOGI(TAG, "Published hum: %s, msg_id=%d", payload, msg_id);
+            } else {
+                ESP_LOGW(TAG, "MQTT client not ready");
+            }
+        }
+        if (xQueueReceive(PressQueueHandle, &press_x10, xTicksToWait) == pdTRUE) {
+            ESP_LOGI(TAG, "Received pressure: %" PRIu32 " (%.1f C)",
+            press_x10, press_x10 / 10.0f);
+
+            float pressure = press_x10 / 10.0f;
+            snprintf(payload, sizeof(payload), "%.1f", pressure);
+
+            if (s_client != NULL) {
+                int msg_id = esp_mqtt_client_publish(s_client, "sensors/pressure", payload, 0, 1, 0);
+                ESP_LOGI(TAG, "Published pressure: %s, msg_id=%d", payload, msg_id);
+            } else {
+                ESP_LOGW(TAG, "MQTT client not ready");
+            }
         }
 
        /* vTaskDelay(pdMS_TO_TICKS(10)); */
