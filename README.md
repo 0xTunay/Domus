@@ -29,6 +29,7 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
   * Telegraf takes the message, converts it to time-series format, adds tags (host=raspberry) and sends it to InfluxDB (outputs.influxdb_v2)
 * **InfluxDB**
   * stores this data and provides an interface (API) for reading
+  * ![img](docs/inxludb.png)
 * **Grafana** 
   * Grafana connects to InfluxDB as a datasource and makes queries to the database to build graphs and dashboards
   * Allows you to view data by room and sensor in real time
