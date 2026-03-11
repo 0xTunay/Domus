@@ -86,14 +86,14 @@ void ControlTask(void *pvParameter) {
             } else {
                 ESP_LOGW(TAG, "MQTT client not ready");
             }
-
-            if (temp_x10 >= 280) {
-                BlinkEnable = false;
-                LedON();
-            } else {
-                BlinkEnable = true;
-                LedOFF();
-            }
+            //
+            // if (temp_x10 >= 280) {
+            //     BlinkEnable = false;
+            //     LedON();
+            // } else {
+            //     BlinkEnable = true;
+            //     LedOFF();
+            // }
         } else {
             ESP_LOGW(TAG, "Error: data from sensor not receined ");
             SensorEnable = false;
