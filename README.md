@@ -19,6 +19,7 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
     * Receives data from ESP-GATEWAY device
     * Topics are organized by room, for example
     * Communication is encrypted using TLS 
+  ![ing](docs/TLS.jpg)
       ```text
           sensors/temp
           sensors/humidity
