@@ -14,7 +14,8 @@
 #define ITEM_SIZE 50
 
 static bool BlinkEnable = false;
-
+void vSensorTask(void *pvParameter);
+void ControlTask(void *pvParameter);
 void LedInit(void) {
 	gpio_config_t io_conf = {};
 	io_conf.intr_type = GPIO_INTR_DISABLE;          // без прерываний

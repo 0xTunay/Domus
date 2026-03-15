@@ -9,6 +9,7 @@
 #include "nvs_flash.h"
 #include "esp_netif.h"
 #include "esp_tls.h"
+#include "semaphore.h"
 
 #include "mqtt_client.h"
 
@@ -17,6 +18,7 @@ static const char *TAG = "mosquitto";
 #include "mosquitto.h"
 
 esp_mqtt_client_handle_t s_client = NULL;
+SemaphoreHandle_t s_mqtt_mutex = NULL;
 
 static void log_error_if_nonzero(const char *msg, int error_code) {
     if (error_code != 0 ) {
@@ -81,6 +83,11 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base,
 
 void mqtt_app_start(void)
 {
+    s_mqtt_mutex = xSemaphoreCreateMutex();
+    if (s_mqtt_mutex != NULL) {
+        ESP_LOGI(TAG, "Semaphore created");
+    }
+
     esp_mqtt_client_config_t mqtt_cfg = {
         .broker.address.uri = CONFIG_BROKER_URL,
         .credentials.username = CONFIG_MQTT_USERNAME,
