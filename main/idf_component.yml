@@ -22,3 +22,4 @@ dependencies:
   espressif/esp_lvgl_adapter: '*'
   espressif/mqtt: '*'
   espressif/bme280: =*
+  espressif/esp-now: =*

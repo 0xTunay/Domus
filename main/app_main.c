@@ -11,11 +11,10 @@
 #include "i2c_bus.h"
 #include "bme280.h"
 #include "mqtt_client.h"
-
+#include "driver/gpio.h"
 // #include "display_lvgl.h"
 #include "app_main.h"
 #include "mosquitto.h"
-#include "wifi_manager.h"
 #include "BME280.h"
 
 #define DHT_GPIO 23
@@ -83,13 +82,6 @@ void ControlTask(void *pvParameter) {
                 ESP_LOGI(TAG, "Published temp: %s, msg_id=%d", payload, msg_id);
             } else {
                 ESP_LOGW(TAG, "MQTT client not ready");
-            }
-            if (temp_x10 >= 280) {
-                BlinkEnable = false;
-                LedON();
-            } else {
-                BlinkEnable = true;
-                LedOFF();
             }
         } else {
             ESP_LOGW(TAG, "Error: data from sensor not receined ");
@@ -160,25 +152,6 @@ void app_main(void)
     LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
-   //  ESP_ERROR_CHECK(DisplayLvglInit());
-    /*====================== WIFI INIT ======================*/
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-
-    if (CONFIG_LOG_MAXIMUM_LEVEL > CONFIG_LOG_DEFAULT_LEVEL) {
-        /* If you only want to open more logs in the wifi module, you need to make the max level greater than the default level,
-         * and call esp_log_level_set() before esp_wifi_init() to improve the log level of the wifi module. */
-        esp_log_level_set("wifi", CONFIG_LOG_MAXIMUM_LEVEL);
-    }
-
-    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
-    wifi_init_sta();
-    /*====================== WIFI INIT ======================*/
-
     /*=== MQTT INIT === */
     mqtt_app_start();
     /*=== MQTT INIT === */

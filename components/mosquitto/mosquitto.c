@@ -16,15 +16,16 @@ static const char *TAG = "mosquitto";
 #include "sdkconfig.h"
 #include "mosquitto.h"
 
-extern esp_mqtt_client_handle_t s_client = NULL;
+SemaphoreHandle_t MqttSemaphoreHandle = NULL;
+esp_mqtt_client_handle_t s_client = NULL;
 
-static void log_error_if_nonzero(const char *msg, int error_code) {
+void log_error_if_nonzero(const char *msg, int error_code) {
     if (error_code != 0 ) {
         ESP_LOGE(TAG, "%s: 0x%x", msg, error_code);
     }
 }
 
-static void mqtt_event_handler(void *handler_args, esp_event_base_t base,
+void mqtt_event_handler(void *handler_args, esp_event_base_t base,
                                int32_t event_id, void *event_data) {
 
     esp_mqtt_event_handle_t event = event_data;
@@ -82,6 +83,12 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base,
 
 void mqtt_app_start(void)
 {
+    MqttSemaphoreHandle = xSemaphoreCreateMutex();
+    if (MqttSemaphoreHandle == NULL) {
+        ESP_LOGE(TAG, "Failed to create MQTT semaphore");
+        return;
+    }
+
     esp_mqtt_client_config_t mqtt_cfg = {
         .broker.address.uri = CONFIG_BROKER_URL,
         .credentials.username = CONFIG_MQTT_USERNAME,

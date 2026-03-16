@@ -1,12 +1,8 @@
-//
 // Created by tunay on 12/26/25.
 //
 
-#ifndef _APP_MAIN_H
-#define _APP_MAIN_H
-#include "driver/gpio.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+#ifndef APP_MAIN_H
+#define APP_MAIN_H
 
 #define LED_GPIO GPIO_NUM_2
 
@@ -41,4 +37,4 @@ void LedBlink(void *pvParameter) {
 void LedStopBlink(void) {
 	gpio_set_level(LED_GPIO, 0);
 }
-#endif //_APP_MAIN_H
+#endif // APP_MAIN_H
