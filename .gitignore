@@ -16,3 +16,6 @@ Kconfig
 .cproject
 .project
 components/mosquitto/Kconfig
+__pycache__
+.pytest_cache/
+.venv/
