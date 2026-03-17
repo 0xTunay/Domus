@@ -12,11 +12,10 @@ build
 .DS_Store
 sad.txt
 sdkconfig
-Kconfig
 .cproject
 .project
 components/mosquitto/Kconfig
 __pycache__
 .pytest_cache/
 .venv/
-venv 
+venv

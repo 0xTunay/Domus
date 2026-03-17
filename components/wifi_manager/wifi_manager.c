@@ -18,8 +18,8 @@
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
-#include "sdkconfig.h"
 
+#include "sdkconfig.h"
 #include "wifi_manager.h"
 
 /* The examples use WiFi configuration that you can set via project configuration menu
