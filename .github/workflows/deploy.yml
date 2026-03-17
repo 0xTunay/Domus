@@ -1,0 +1,6 @@
+name: CI embedded
+on:
+  push:
+    branches: [mainci/github-actions]
+  pull_request:
+    branches: [mainci/github-actions]
