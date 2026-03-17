@@ -2020,6 +2020,14 @@ CONFIG_MQTT_PASSWORD="mosquitto"
 # end of MQTT Configuration
 
 #
+# WiFi Manager Configuration
+#
+CONFIG_WIFI_SSID="myssid"
+CONFIG_WIFI_PASS="mypassword"
+CONFIG_MAXIMUM_RETRY=5
+# end of WiFi Manager Configuration
+
+#
 # IoT Button
 #
 CONFIG_BUTTON_PERIOD_TIME_MS=5

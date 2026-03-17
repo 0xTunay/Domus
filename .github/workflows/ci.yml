@@ -16,9 +16,17 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Build firmware 
+      - name: Create sdkconfig.defaults for CI
+        run: |
+          cat > sdkconfig.defaults << 'EOF'
+          CONFIG_WIFI_MANAGER_SSID="ci_test_ssid"
+          CONFIG_WIFI_MANAGER_PASSWORD="ci_test_password"
+          CONFIG_WIFI_MANAGER_MAX_RETRY=5
+          EOF
+
+      - name: Build firmware
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.5.3
+          esp_idf_version: v5.4.0
           target: esp32
           path: '.'
