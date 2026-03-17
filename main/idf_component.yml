@@ -17,7 +17,4 @@ dependencies:
   #   # All dependencies of `main` are public by default.
   #   public: true
   esp-idf-lib/dht: '*'
-  lvgl/lvgl: '*'
-  espressif/esp_lvgl_port: '*'
-  espressif/esp_lvgl_adapter: '*'
   espressif/mqtt: '*'
