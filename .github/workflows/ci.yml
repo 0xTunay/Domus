@@ -19,8 +19,11 @@ jobs:
       - name: Create sdkconfig.defaults for CI
         run: |
           cat > sdkconfig.defaults << 'EOF'
-          CONFIG_WIFI_MANAGER_SSID="ci_test_ssid"
-          CONFIG_WIFI_MANAGER_PASSWORD="ci_test_password"
+          CONFIG_WIFI_SSID="${{ secrets.WIFI_SSID }}"
+          CONFIG_WIFI_PASSWORD="${{ secrets.WIFI_PASSWORD }}"
+          CONFIG_MQTT_BROKER_URL="${{ secrets.MQTT_BROKER_URL }}"
+          CONFIG_MQTT_USERNAME="${{ secrets.MQTT_USERNAME }}"
+          CONFIG_MQTT_PASSWORD="${{ secrets.MQTT_PASSWORD }}"
           CONFIG_WIFI_MANAGER_MAX_RETRY=5
           EOF
 
