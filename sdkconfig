@@ -2022,9 +2022,9 @@ CONFIG_MQTT_PASSWORD="mosquitto"
 #
 # WiFi Manager Configuration
 #
-CONFIG_WIFI_SSID="myssid"
-CONFIG_WIFI_PASS="mypassword"
-CONFIG_MAXIMUM_RETRY=5
+WIFI_SSID="myssid"
+WIFI_PASS="mypassword"
+MAXIMUM_RETRY=5
 # end of WiFi Manager Configuration
 
 #
