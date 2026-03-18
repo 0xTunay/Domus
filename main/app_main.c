@@ -58,6 +58,7 @@ void vSensorTask(void *pvParameter) {
     vTaskDelete(NULL);
 }
 void ControlTask(void *pvParameter) {
+    // function to send data to esp gateway with esp-now protocol
     uint32_t temp_x10 = 0;
     uint32_t hum_x10 = 0;
     uint32_t press_x10 = 0;
@@ -67,57 +68,7 @@ void ControlTask(void *pvParameter) {
     bool SensorEnable = true;
 
     while (SensorEnable) {
-
-        if (xQueueReceive(SensorQueueHandle, &temp_x10, xTicksToWait) == pdTRUE) {
-
-            ESP_LOGI(TAG, "Received temp: %" PRIu32 " (%.1f C)",
-            temp_x10, temp_x10 / 10.0f);
-            float temperature = temp_x10 / 10.0f;
-            snprintf(payload, sizeof(payload), "%.1f", temperature);
-
-            if (s_client != NULL) {
-                int msg_id = esp_mqtt_client_publish(s_client, "sensors/temp", payload, 0, 1, 0);
-                ESP_LOGI(TAG, "Published temp: %s, msg_id=%d", payload, msg_id);
-            } else {
-                ESP_LOGW(TAG, "MQTT client not ready");
-            }
-        } else {
-            ESP_LOGW(TAG, "Error: data from sensor not receined ");
-            SensorEnable = false;
-        }
-
-        if (xQueueReceive(HymQueueHandle, &hum_x10, xTicksToWait) == pdTRUE) {
-            ESP_LOGI(TAG, "Received hum: %" PRIu32 " (%.1f C)",
-            hum_x10, hum_x10 / 10.0f);
-
-            float humidity = hum_x10 / 10.0f;
-            snprintf(payload, sizeof(payload), "%.1f", humidity);
-
-            if (s_client != NULL) {
-                int msg_id = esp_mqtt_client_publish(s_client, "sensors/pressure", payload, 0, 1, 0);
-                ESP_LOGI(TAG, "Published hum: %s, msg_id=%d", payload, msg_id);
-            } else {
-                ESP_LOGW(TAG, "MQTT client not ready");
-            }
-        }
-        if (xQueueReceive(PressQueueHandle, &press_x10, xTicksToWait) == pdTRUE) {
-            ESP_LOGI(TAG, "Received pressure: %" PRIu32 " (%.1f C)",
-            press_x10, press_x10 / 10.0f);
-
-            float pressure = press_x10 / 10.0f;
-            snprintf(payload, sizeof(payload), "%.1f", pressure);
-
-            if (s_client != NULL) {
-                int msg_id = esp_mqtt_client_publish(s_client, "sensors/pressure", payload, 0, 1, 0);
-                ESP_LOGI(TAG, "Published pressure: %s, msg_id=%d", payload, msg_id);
-            } else {
-                ESP_LOGW(TAG, "MQTT client not ready");
-            }
-        }
-
-       /* vTaskDelay(pdMS_TO_TICKS(10)); */
     }
-    vTaskDelete(NULL);
 
 }
 
@@ -150,9 +101,6 @@ void app_main(void)
     LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
-    /*=== MQTT INIT === */
-    mqtt_app_start();
-    /*=== MQTT INIT === */
 
     /*=== BME280 INIT === */
     bme280_init();
@@ -215,5 +163,5 @@ void app_main(void)
                 3,
                 NULL) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create LedBlink");
-                }
+    }
 }
