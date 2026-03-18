@@ -10,11 +10,9 @@
 #include "nvs_flash.h"
 #include "i2c_bus.h"
 #include "bme280.h"
-#include "mqtt_client.h"
 #include "driver/gpio.h"
 // #include "display_lvgl.h"
 #include "app_main.h"
-#include "mosquitto.h"
 #include "BME280.h"
 
 #define DHT_GPIO 23

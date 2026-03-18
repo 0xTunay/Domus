@@ -106,7 +106,7 @@ dependencies:
       type: service
     version: 1.2.1
   espressif/esp_lv_decoder:
-    component_hash: 864a3aee87eab3e2ff4ee69527050c543570cd92bd156b2c32009d9231414a63
+    component_hash: 992e26273dd680cc6b82fe031232e046d9e31a448335c950af7782152033d7fa
     dependencies:
     - name: espressif/esp_new_jpeg
       registry_url: https://components.espressif.com
@@ -135,7 +135,7 @@ dependencies:
     - esp32c3
     - esp32c5
     - esp32c6
-    version: 0.3.4
+    version: 0.3.5
   espressif/esp_lv_fs:
     component_hash: 66896007884b817df34c964f9a114fff538ee2674e99fee7159162498b93f94b
     dependencies:
@@ -159,12 +159,8 @@ dependencies:
       type: service
     version: 1.0.1
   espressif/esp_lvgl_adapter:
-    component_hash: 32116c256d579df89bb3a636d3a5841739cc7e2eb1f2199e51cff70d3049c205
+    component_hash: 2487f1b20ce9df6e8a621bff2a909da4c01465d0c678f0d4e4e22d691ccd184c
     dependencies:
-    - name: lvgl/lvgl
-      registry_url: https://components.espressif.com
-      require: private
-      version: '>=8,<10'
     - name: espressif/button
       registry_url: https://components.espressif.com
       require: public
@@ -192,10 +188,14 @@ dependencies:
     - name: idf
       require: private
       version: '>=5.5'
+    - name: lvgl/lvgl
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=8,<10'
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 0.4.0
+    version: 0.4.1
   espressif/esp_lvgl_port:
     component_hash: b6360960f47b6776462e7092861b3ea66477ffb762a01baa0aecbb3d74cd50f4
     dependencies:
@@ -292,16 +292,6 @@ dependencies:
       registry_url: https://components.espressif.com
       type: service
     version: 1.6.55
-  espressif/mqtt:
-    component_hash: ffdad5659706b4dc14bc63f8eb73ef765efa015bf7e9adf71c813d52a2dc9342
-    dependencies:
-    - name: idf
-      require: private
-      version: '>=5.3'
-    source:
-      registry_url: https://components.espressif.com/
-      type: service
-    version: 1.0.0
   espressif/zlib:
     component_hash: 64ea2fd6754c5a05951f1ddb312ac835cd782e68cb5bd9dfcd1c3a107c8fbfbc
     dependencies:
@@ -335,10 +325,9 @@ direct_dependencies:
 - espressif/esp-now
 - espressif/esp_lvgl_adapter
 - espressif/esp_lvgl_port
-- espressif/mqtt
 - idf
 - lvgl/lvgl
 - protocol_examples_common
-manifest_hash: dafc42c76119f6586e33f8f20855fe78be9c50e8b5121e9f5cf58bb48aebad0b
+manifest_hash: d379b7286eec4ca1ba95cc89f3b8f4bf205771a1b1eec1b34ef9113372bfbec7
 target: esp32c3
 version: 2.0.0
