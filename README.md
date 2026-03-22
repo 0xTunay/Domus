@@ -1,4 +1,6 @@
 # Domus 
+![Static Badge](https://img.shields.io/badge/ESP--IDF-v5.5.2-blue)
+![Static Badge](https://img.shields.io/badge/ESP32-C3-red)
 
 
 This project is an intelligent system for monitoring temperature, pressure, and humidity in rooms  
