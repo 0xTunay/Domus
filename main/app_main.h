@@ -10,6 +10,13 @@
 
 static bool BlinkEnable = false;
 
+typedef struct {
+	float temperature;
+	float humidity;
+	float pressure;
+} SensorData_t;
+
+
 void LedInit(void) {
 	gpio_config_t io_conf = {};
 	io_conf.intr_type = GPIO_INTR_DISABLE;

@@ -5,13 +5,11 @@
 #include "esp_log.h"
 #include "bme280.h"
 #include "i2c_bus.h"
-
 #include "BME280.h"
 
-#include "driver/spi_master.h"
 
-#define I2C_MASTER_SCL_IO           GPIO_NUM_2           /*!< gpio number for I2C master clock IO2*/
-#define I2C_MASTER_SDA_IO           GPIO_NUM_1           /*!< gpio number for I2C master data  IO1*/
+#define I2C_MASTER_SCL_IO           GPIO_NUM_1           /*!< gpio number for I2C master clock IO2*/
+#define I2C_MASTER_SDA_IO           GPIO_NUM_2           /*!< gpio number for I2C master data  IO1*/
 #define I2C_MASTER_NUM              I2C_NUM_0            /*!< I2C port number for master bme280 */
 #define I2C_MASTER_TX_BUF_DISABLE   0                    /*!< I2C master do not need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE   0                    /*!< I2C master do not need buffer */
@@ -21,8 +19,7 @@
 i2c_bus_handle_t i2c_bus = NULL;
 bme280_handle_t bme280 = NULL;
 
-
-void bme280_init(void) {
+void i2c_bus_init(void) {
     i2c_config_t conf = {
         .mode = I2C_MODE_MASTER,
         .sda_io_num = I2C_MASTER_SDA_IO,
@@ -32,9 +29,13 @@ void bme280_init(void) {
         .master.clk_speed = I2C_MASTER_FREQ_HZ,
     };
     i2c_bus = i2c_bus_create(I2C_MASTER_NUM, &conf);
-    bme280 = bme280_create(i2c_bus, BME280_I2C_ADDRESS_DEFAULT);
-    ESP_LOGI("BME280:", "bme280_default_init:%d", bme280_default_init(bme280));
 
+}
+void bme280_init(void) {
+
+    bme280 = bme280_create(i2c_bus, 0x76);
+    esp_err_t ret = bme280_default_init(bme280);
+    ESP_LOGI("BME280", "bme280_default_init: %d", ret);
 }
 
 // void bme280_getdata(void) {

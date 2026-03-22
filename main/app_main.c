@@ -8,18 +8,14 @@
 #include <inttypes.h>
 #include "freertos/semphr.h"
 #include "nvs_flash.h"
-#include "i2c_bus.h"
 #include "bme280.h"
 #include "driver/gpio.h"
 // #include "display_lvgl.h"
 #include "app_main.h"
 #include "BME280.h"
 
-#define DHT_GPIO 23
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
-QueueHandle_t HymQueueHandle = NULL;
-QueueHandle_t PressQueueHandle = NULL;
 TaskHandle_t SensorTaskHandle = NULL;
 SemaphoreHandle_t SensorSemaphoreHandle = NULL;
 
@@ -27,28 +23,30 @@ static const char *TAG = "main";
 
 
 void vSensorTask(void *pvParameter) {
-    float temperature = 0.0, humidity = 0.0, pressure = 0.0;
     int error_count = 0;
     const int max_errors = 5;
 
     while (error_count < max_errors) {
+        SensorData_t data = {0};
         esp_err_t ret = ESP_OK;
-        ret |= bme280_read_temperature(bme280, &temperature);
-        ret |= bme280_read_humidity(bme280, &humidity);
-        ret |= bme280_read_pressure(bme280, &pressure);
+        ret |= bme280_read_temperature(bme280, &data.temperature);
+        ret |= bme280_read_humidity(bme280, &data.humidity);
+        ret |= bme280_read_pressure(bme280, &data.pressure);
 
         if (ret == ESP_OK) {
             error_count = 0;
-            uint32_t temp_x10 = (uint32_t)(temperature * 10.0f);
 
             ESP_LOGI(TAG, "BME280: T=%.1f C, H=%.1f %%, P=%.1f hPa",
-                            temperature,humidity, pressure / 100.0f);
-
-            if (xQueueSend(SensorQueueHandle, &temp_x10, 0) != pdTRUE) {
-                ESP_LOGW(TAG, "Queue full, skip ");
-            } else {
+                    data.temperature,
+                    data.humidity,
+                    data.pressure / 100.0f);
+            if (xQueueSend(SensorQueueHandle, &data, pdMS_TO_TICKS(1000)) != pdPASS) {
                 error_count++;
-                ESP_LOGE(TAG, "BME280 read failed (%d/%d)", error_count, max_errors);
+                ESP_LOGE(TAG, "BME280 read failed (%d/%d)",
+                         error_count, 
+                         max_errors);
+            } else {
+                ESP_LOGI(TAG, "Data sent to queue successfully");
             }
         }
         vTaskDelay(pdMS_TO_TICKS(2000));
@@ -59,16 +57,24 @@ void vSensorTask(void *pvParameter) {
 }
 void ControlTask(void *pvParameter) {
     // function to send data to esp gateway with esp-now protocol
-    uint32_t temp_x10 = 0;
-    uint32_t hum_x10 = 0;
-    uint32_t press_x10 = 0;
-
-    char payload[128];
+    SensorData_t data;
+   // char payload[128];
     const TickType_t xTicksToWait = pdMS_TO_TICKS(5000);
     bool SensorEnable = true;
 
-    while (SensorEnable) {
+    while(SensorEnable){
+        if (xQueueReceive(SensorQueueHandle, &data, xTicksToWait) == pdTRUE) {
+            ESP_LOGI(TAG, "Received sensor data: T=%.1f C, H=%.1f %%, P=%.1f hPa", 
+                     data.temperature,
+                     data.humidity,
+                     data.pressure / 100.0f);
+            // send to esp gateway with esp now
+        } else {
+            ESP_LOGW(TAG, "No temperature received within timeout");
+        }  
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
+    vTaskDelete(NULL);
 
 }
 
@@ -90,7 +96,8 @@ void vTaskMonitor(void *pvParameter) {
         }
 
         UBaseType_t used = uxQueueMessagesWaiting(SensorQueueHandle);
-        ESP_LOGI(TAG,"queue item size %d", (unsigned)used);
+        ESP_LOGI(TAG,"queue item size %d",
+                 (unsigned)used);
 
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
@@ -101,24 +108,14 @@ void app_main(void)
     LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
-
-    /*=== BME280 INIT === */
+    i2c_bus_init();
+    /*=== BME280 I NIT === */
     bme280_init();
     /*=== BME280 INIT === */
 
-    SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
+    SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(SensorData_t));
     if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
-        return;
-    }
-    PressQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
-    if (PressQueueHandle == NULL) {
-        ESP_LOGE(TAG, "Failed to create PressQueue");
-        return;
-    }
-    HymQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
-    if (HymQueueHandle == NULL) {
-        ESP_LOGE(TAG, "Failed to create HymQueue");
         return;
     }
 // if (xTaskCreate(
@@ -132,7 +129,7 @@ void app_main(void)
 //     }
     if (xTaskCreate(vSensorTask,
                 "vSensorTask",
-                configMINIMAL_STACK_SIZE * 2,
+                4096,
                 NULL,
                 4,
                 &SensorTaskHandle) != pdPASS) {
