@@ -13,6 +13,8 @@
 // #include "display_lvgl.h"
 #include "app_main.h"
 #include "BME280.h"
+#include "sensors_types.h"
+#include "espnow_handler.h"
 
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
@@ -68,6 +70,7 @@ void ControlTask(void *pvParameter) {
                      data.temperature,
                      data.humidity,
                      data.pressure / 100.0f);
+            espnow_send_telemetry(&data);
             // send to esp gateway with esp now
         } else {
             ESP_LOGW(TAG, "No temperature received within timeout");
@@ -108,16 +111,28 @@ void app_main(void)
     LedInit();
     LedOFF();
     ESP_LOGI(TAG, "Initializing the Sensor");
-    i2c_bus_init();
-    /*=== BME280 I NIT === */
-    bme280_init();
-    /*=== BME280 INIT === */
 
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+    
     SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(SensorData_t));
     if (SensorQueueHandle == NULL) {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
         return;
     }
+    i2c_bus_init();
+    /*=== BME280 I NIT === */
+    bme280_init();
+    /*=== BME280 INIT === */
+
+    /*=== ESP-NOW INIT === */
+    espnow_handler_init();
+    /*=== ESP-NOW INIT === */
+
 // if (xTaskCreate(
 //             DisplayLvglTask,
 //             "DisplayLvglTask",
