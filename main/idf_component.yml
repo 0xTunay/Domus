@@ -16,3 +16,4 @@ dependencies:
   #   public: true
   esp-idf-lib/dht: '*'
   espressif/mqtt: '*'
+  espressif/esp-now: =*
