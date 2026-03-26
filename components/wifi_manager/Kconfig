@@ -1,12 +1,12 @@
 menu "WiFi Manager Configuration"
     config WIFI_SSID
         string "WiFi SSID"
-        default "myssid"
+        default "zte08"
         help
             SSID (network name) to connect to.
     config WIFI_PASS
         string "WiFi Password"
-        default "mypassword"
+        default "23021921k"
         help
             WiFi password (WPA or WPA2).
     config MAXIMUM_RETRY

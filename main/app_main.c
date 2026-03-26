@@ -9,11 +9,11 @@
 #include "nvs_flash.h"
 
 #include "app_main.h"
-#include "dht.h"
 // #include "display_lvgl.h"
 #include "mosquitto.h"
 #include "mqtt_client.h"
 #include "wifi_manager.h"
+#include "espnow_handler.h"
 
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 QueueHandle_t SensorQueueHandle = NULL;
@@ -24,33 +24,12 @@ QueueHandle_t HumidityQueueHandle = NULL;
 static const char *TAG = "main";
 
 
-void vSensorTask(void *pvParameter) {
-    float humidity = 0.0f, temperature = 0.0f;
+void vSensorTask(void *pvParameter) { /* implementation of data reception from ESP at present  */
     int error_count = 0;
     const int max_errors = 5;
 
     while (error_count < max_errors) {
-        esp_err_t ret = dht_read_float_data(DHT_TYPE_AM2301, DHT_GPIO, &humidity, &temperature);
-
-        if (ret == ESP_OK) {
-            error_count = 0;
-            uint32_t temp_x10 = (uint32_t) (temperature * 10.0f);
-
-            ESP_LOGI(TAG, "Read DHT: Temp %.1f. Read DHT: Humidity %.1f.", temperature, humidity);
-
-            if (xQueueSend(SensorQueueHandle, &temp_x10, 0) != pdTRUE) {
-                ESP_LOGW(TAG, "Queue full, skipping data");
-                error_count++;
-            }
-        }
-        if (ret == ESP_OK) {
-            uint32_t hum_x10 = (uint32_t) (humidity * 10.0f);
-
-            ESP_LOGI(TAG, "Read DHT: Humidity %.1f.", humidity);
-            if (xQueueSend(HumidityQueueHandle, &hum_x10, 0) != pdTRUE) {
-                ESP_LOGW(TAG, "Queue full, skipping data");
-            }
-        }
+     
 
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
@@ -227,15 +206,7 @@ void app_main(void)
         esp_log_level_set("wifi", CONFIG_LOG_MAXIMUM_LEVEL);
     }
 
-    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
-    wifi_init_sta();
-    /*====================== WIFI INIT ======================*/
-
-    /*=== MQTT INIT === */
-    mqtt_app_start();
-    /*=== MQTT INIT === */
-
-    SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
+        SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(uint32_t));
     if (SensorQueueHandle == NULL)
     {
         ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
@@ -248,6 +219,14 @@ void app_main(void)
         ESP_LOGE(TAG, "Failed to create HumidityQueue");
         return;
     }
+    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
+    wifi_init_sta();
+    /*====================== WIFI INIT ======================*/
+
+    /*=== MQTT INIT === */
+    mqtt_app_start();
+    /*=== MQTT INIT === */
+
 
     if (xTaskCreate(vSensorTask,
                     "vSensorTask",
