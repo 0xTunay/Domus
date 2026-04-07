@@ -1,71 +1,73 @@
 #include <string.h>
-#include <stdlib.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/queue.h"
-#include "esp_netif.h"
-#include "esp_event.h"
-#include "esp_wifi.h"
-#include "esp_now.h"
 #include "esp_log.h"
-#include "esp_crc.h"
+#include "esp_now.h"
+#include "esp_wifi.h"
+#include "nvs_flash.h"
 #include "esp_mac.h"
 #include "espnow_handler.h"
+#include "receive_queue.h"
 #include "Sensors_types.h"
 
-static const char *TAG = "ESP-NOW";
+static const char *TAG = "[espnow_handler]";
 
-extern QueueHandle_t SensorQueueHandle;
+QueueHandle_t SensorQueueHandle = NULL;
 
-static uint16_t calc_crc(const void *data, size_t len) {
-    return esp_crc16_le(UINT16_MAX, (const uint8_t *)data, len);
-}
-
-static void on_data_recv(const esp_now_recv_info_t *info,
-                         const uint8_t *data, int len)
+static void espnow_recv_cb(const esp_now_recv_info_t *recv_info,
+                           const uint8_t *data,
+                           int data_len)
 {
-    if (len != sizeof(espnow_packet_t)) {
-        ESP_LOGW(TAG, "Wrong packet size: got %d, expected %d",
-                 len, sizeof(espnow_packet_t));
+    if (data == NULL || data_len != sizeof(espnow_packet_t)) {
+        ESP_LOGW(TAG, "Invalid packet: len=%d expected=%d",
+                 data_len, (int)sizeof(espnow_packet_t));
         return;
     }
 
-    espnow_packet_t *pkt = (espnow_packet_t *)data;
+    const espnow_packet_t *pkt = (const espnow_packet_t *)data;
 
-    if (pkt->type != PKT_TELEMETRY) {
-        ESP_LOGW(TAG, "Unknown packet type: %d", pkt->type);
-        return;
+
+    switch (pkt->type) {
+
+    case PKT_TELEMETRY: {
+        const SensorData_t *s = &pkt->payload;
+
+        ESP_LOGI(TAG, "Telemetry from " MACSTR ": T=%.1f H=%.1f P=%.1f",
+                 MAC2STR(recv_info->src_addr),
+                 s->temperature, s->humidity, s->pressure);
+
+        if (xQueueSendToBack(TemperatureQueueHandle,
+                             &s->temperature, 0) != pdTRUE) {
+            ESP_LOGW(TAG, "TemperatureQueue full, drop");
+        }
+
+        if (xQueueSendToBack(HumidityQueueHandle,
+                             &s->humidity, 0) != pdTRUE) {
+            ESP_LOGW(TAG, "HumidityQueue full, drop");
+        }
+
+        if (xQueueSendToBack(PressureQueueHandle,
+                             &s->pressure, 0) != pdTRUE) {
+            ESP_LOGW(TAG, "PressureQueue full, drop");
+        }
+        break;
     }
 
-    uint16_t crc = calc_crc(&pkt->payload, sizeof(SensorData_t));
-    if (crc != pkt->crc) {
-        ESP_LOGE(TAG, "CRC mismatch! got=0x%04X expected=0x%04X",
-                 pkt->crc, crc);
-        return;
-    }
-    SensorData_t sensor_data;
-    memcpy(&sensor_data, &pkt->payload, sizeof(SensorData_t));
+    case PKT_OTA_BEGIN:
+    case PKT_OTA_DATA:
+    case PKT_OTA_END:
+        /* TODO: OTA handler */
+        ESP_LOGI(TAG, "OTA packet type=0x%02x, seq=%d", pkt->type, pkt->seq);
+        break;
 
-    ESP_LOGI(TAG, "Received seq=%d temp=%"PRIu32" hum=%"PRIu32" press=%"PRIu32,
-             pkt->seq,
-             sensor_data.temperature,
-             sensor_data.humidity,
-             sensor_data.pressure);
-
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    if (xQueueSendFromISR(SensorQueueHandle, &sensor_data,
-                          &xHigherPriorityTaskWoken) != pdTRUE) {
-        ESP_LOGW(TAG, "Queue full, packet dropped!");
+    default:
+        ESP_LOGW(TAG, "Unknown packet type: 0x%02x", pkt->type);
+        break;
     }
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
-void espnow_master_init(void) {
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-
+void espnow_master_init(void)
+{
     ESP_ERROR_CHECK(esp_now_init());
-
-    ESP_ERROR_CHECK(esp_now_register_recv_cb(on_data_recv));
+    ESP_ERROR_CHECK(esp_now_register_recv_cb(espnow_recv_cb));
 
     ESP_LOGI(TAG, "ESP-NOW master initialized");
 }

@@ -5,7 +5,6 @@
 #include "Sensors_types.h"
 
 extern QueueHandle_t SensorQueueHandle;
-
 typedef enum {
     PKT_TELEMETRY = 0x01,
     PKT_OTA_BEGIN = 0x10,

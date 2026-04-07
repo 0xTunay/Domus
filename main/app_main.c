@@ -20,7 +20,6 @@
 TaskHandle_t DisplayLvglTaskHandle = NULL;
 TaskHandle_t SensorTaskHandle = NULL;
 SemaphoreHandle_t SensorSemaphoreHandle = NULL;
-QueueHandle_t SensorQueueHandle = NULL;
 
 static const char *TAG = "main";
 
@@ -77,37 +76,43 @@ void vTaskMonitor(void *pvParameter)
         if (SensorTaskHandle != NULL)
         {
             eTaskState st = eTaskGetState(SensorTaskHandle);
-            switch (st)
-            {
-            case eRunning:
-                ESP_LOGI(TAG, "Task Running");
-                break;
-            case eSuspended:
-                ESP_LOGI(TAG, "Task Suspended");
-                break;
-            case eReady:
-                ESP_LOGI(TAG, "Task Ready");
-                break;
-            case eBlocked:
-                ESP_LOGI(TAG, "Task Blocked");
-                break;
-            case eDeleted:
-                ESP_LOGI(TAG, "Task Deleted");
-                break;
-            default:
-                ESP_LOGI(TAG, "Task Default");
-                break;
+            switch (st){
+            case eRunning:   ESP_LOGI(TAG, "SensorTask: Running");   break;
+            case eSuspended: ESP_LOGI(TAG, "SensorTask: Suspended"); break;
+            case eReady:     ESP_LOGI(TAG, "SensorTask: Ready");     break;
+            case eBlocked:   ESP_LOGI(TAG, "SensorTask: Blocked");   break;
+            case eDeleted:   ESP_LOGI(TAG, "SensorTask: Deleted");   break;
+            default:         ESP_LOGI(TAG, "SensorTask: Unknown");   break;
             }
-        }
-        else
-        {
-            ESP_LOGW(TAG, "Sensor null");
+        } else {
+            ESP_LOGW(TAG, "SensorTaskHandle is NULL");
         }
 
-        UBaseType_t used = uxQueueMessagesWaiting(SensorQueueHandle);
-        ESP_LOGI(TAG, "queue item size %d", (unsigned)used);
+        if (TemperatureQueueHandle != NULL) {
+            ESP_LOGI(TAG, "TempQueue:  %u/%u",
+                     (unsigned)uxQueueMessagesWaiting(TemperatureQueueHandle),
+                     (unsigned)uxQueueSpacesAvailable(TemperatureQueueHandle)
+                         + (unsigned)uxQueueMessagesWaiting(TemperatureQueueHandle));
+        }
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        if (HumidityQueueHandle != NULL) {
+            ESP_LOGI(TAG, "HumQueue:   %u/%u",
+                     (unsigned)uxQueueMessagesWaiting(HumidityQueueHandle),
+                     (unsigned)uxQueueSpacesAvailable(HumidityQueueHandle)
+                         + (unsigned)uxQueueMessagesWaiting(HumidityQueueHandle));
+        }
+
+        if (PressureQueueHandle != NULL) {
+            ESP_LOGI(TAG, "PressQueue: %u/%u",
+                     (unsigned)uxQueueMessagesWaiting(PressureQueueHandle),
+                     (unsigned)uxQueueSpacesAvailable(PressureQueueHandle)
+                         + (unsigned)uxQueueMessagesWaiting(PressureQueueHandle));
+        }
+        /* free heap for debugging */
+        ESP_LOGI(TAG, "Free heap: %lu bytes",
+                 (unsigned long)esp_get_free_heap_size());
+
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }
 
@@ -115,76 +120,33 @@ void app_main(void)
 {
     LedInit();
     LedOFF();
-    SensorQueueHandle = xQueueCreate(10, sizeof(SensorData_t));    if (SensorTaskHandle != NULL) {
-        ESP_LOGI(TAG, "Sensor Task Created");
-    } else {
-        ESP_LOGE(TAG, "Sensor Task Creation failed");
-    }
-    ESP_LOGI(TAG, "Initializing the Sensor");
 
-    /*====================== WIFI/NVS INIT ======================*/
+    receive_queue_init();
+
+    /* NVS */
     esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
-    {
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
 
-    if (CONFIG_LOG_MAXIMUM_LEVEL > CONFIG_LOG_DEFAULT_LEVEL)
-    {
-        esp_log_level_set("wifi", CONFIG_LOG_MAXIMUM_LEVEL);
-    }
-    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
-
+    /* WiFi → MQTT → ESP-NOW */
     wifi_init_sta();
-    /*====================== WIFI/NVS INIT ======================*/
-
-    /*=== MQTT INIT === */
     mqtt_app_start();
-    /*=== MQTT INIT === */
-
-    /*=== ESP-NOW INIT === */
     espnow_master_init();
-    /*=== ESP-NOW INIT ===*/
 
-    if (xTaskCreate(vSensorTask,
-                    "vSensorTask",
-                    configMINIMAL_STACK_SIZE * 2,
-                    NULL,
-                    4,
-                    &SensorTaskHandle) != pdPASS)
-    {
-        ESP_LOGE(TAG, "Failed to create vSensorTask");
-    }
-
-    if (xTaskCreate(ControlTask,
-                    "ControlTask",
-                    4096,
-                    NULL,
-                    6,
-                    NULL) != pdPASS)
-    {
+    if (xTaskCreate(ControlTask, "ControlTask", 4096, NULL, 6, NULL) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create ControlTask");
     }
 
-    if (xTaskCreate(vTaskMonitor,
-                    "vTaskMonitor",
-                    configMINIMAL_STACK_SIZE * 2,
-                    NULL,
-                    3,
-                    NULL) != pdPASS)
-    {
+    if (xTaskCreate(vTaskMonitor, "vTaskMonitor",
+                    configMINIMAL_STACK_SIZE * 2, NULL, 3, NULL) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create vTaskMonitor");
     }
 
-    if (xTaskCreate(LedBlink,
-                    "LedBlink",
-                    configMINIMAL_STACK_SIZE * 2,
-                    NULL,
-                    3,
-                    NULL) != pdPASS)
-    {
+    if (xTaskCreate(LedBlink, "LedBlink",
+                    configMINIMAL_STACK_SIZE * 2, NULL, 3, NULL) != pdPASS) {
         ESP_LOGE(TAG, "Failed to create LedBlink");
     }
 }
