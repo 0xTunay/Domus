@@ -23,157 +23,151 @@ SemaphoreHandle_t SensorSemaphoreHandle = NULL;
 
 static const char *TAG = "main";
 
+static void system_init(void) {
+    ESP_LOGI(TAG, "System init start");
 
-void vSensorTask(void *pvParameter) {
-    int error_count = 0;
-    const int max_errors = 5;
-
-    while (error_count < max_errors) {
-        SensorData_t data = {0};
-        esp_err_t ret = ESP_OK;
-        ret |= bme280_read_temperature(bme280, &data.temperature);
-        ret |= bme280_read_humidity(bme280, &data.humidity);
-        ret |= bme280_read_pressure(bme280, &data.pressure);
-
-        if (ret == ESP_OK) {
-            error_count = 0;
-
-            ESP_LOGI(TAG, "BME280: T=%.1f C, H=%.1f %%, P=%.1f hPa",
-                    data.temperature,
-                    data.humidity,
-                    data.pressure / 100.0f);
-            if (xQueueSend(SensorQueueHandle, &data, pdMS_TO_TICKS(1000)) != pdPASS) {
-                error_count++;
-                ESP_LOGE(TAG, "BME280 read failed (%d/%d)",
-                         error_count, 
-                         max_errors);
-            } else {
-                ESP_LOGI(TAG, "Data sent to queue successfully");
-            }
-        }
-        vTaskDelay(pdMS_TO_TICKS(2000));
-    }
-
-    ESP_LOGE(TAG, "BME280 fatal error. Task deleting...");
-    vTaskDelete(NULL);
-}
-void ControlTask(void *pvParameter) {
-    // function to send data to esp gateway with esp-now protocol
-    SensorData_t data;
-   // char payload[128];
-    const TickType_t xTicksToWait = pdMS_TO_TICKS(5000);
-    bool SensorEnable = true;
-
-    while(SensorEnable){
-        if (xQueueReceive(SensorQueueHandle, &data, xTicksToWait) == pdTRUE) {
-            ESP_LOGI(TAG, "Received sensor data: T=%.1f C, H=%.1f %%, P=%.1f hPa", 
-                     data.temperature,
-                     data.humidity,
-                     data.pressure / 100.0f);
-            espnow_send_telemetry(&data);
-            // send to esp gateway with esp now
-        } else {
-            ESP_LOGW(TAG, "No temperature received within timeout");
-        }  
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
-    vTaskDelete(NULL);
-
-}
-
-void vTaskMonitor(void *pvParameter) {
-
-    for (;;) {
-        if (SensorTaskHandle != NULL) {
-                eTaskState st = eTaskGetState(SensorTaskHandle);
-            switch (st) {
-                case eRunning: ESP_LOGI(TAG,"Task Running\n"); break;
-                case eSuspended: ESP_LOGI(TAG,"Task Suspended\n"); break;
-                case eReady: ESP_LOGI(TAG,"Task Ready\n"); break;
-                case eBlocked: ESP_LOGI(TAG,"Task Blocked\n"); break;
-                case eDeleted: ESP_LOGI(TAG,"Task Deleted\n"); break;
-                default: ESP_LOGI(TAG,"Task Default\n"); break;
-            }
-        } else {
-            ESP_LOGW(TAG, "Sensor null");
-        }
-
-        UBaseType_t used = uxQueueMessagesWaiting(SensorQueueHandle);
-        ESP_LOGI(TAG,"queue item size %d",
-                 (unsigned)used);
-
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
-}
-
-void app_main(void)
-{
-    LedInit();
-    LedOFF();
-    ESP_LOGI(TAG, "Initializing the Sensor");
-
+    /* === NVS === */
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
+        ESP_ERROR_CHECK(nvs_flash_init());
     }
-    ESP_ERROR_CHECK(ret);
-    
+
+    /* === I2C === */
+    ESP_LOGI(TAG, "Init I2C...");
+    i2c_bus_init();
+    if (i2c_bus == NULL) {
+        ESP_LOGE(TAG, "I2C init FAILED");
+        abort();
+    }
+
+    /* === BME280 === */
+    ESP_LOGI(TAG, "Init BME280...");
+    bme280_init();
+    if (bme280 == NULL) {
+        ESP_LOGE(TAG, "BME280 init FAILED");
+        abort();
+    }
+
+    /* === ESP-NOW === */
+    ESP_LOGI(TAG, "Init ESP-NOW...");
+    espnow_handler_init();
+
+    ESP_LOGI(TAG, "System init done");
+}
+
+/* ========================================================= */
+
+void vSensorTask(void *pvParameter)
+{
+    SensorData_t data;
+
+    while (1) {
+        if (bme280_read_temperature(bme280, &data.temperature) != ESP_OK ||
+            bme280_read_humidity(bme280, &data.humidity) != ESP_OK ||
+            bme280_read_pressure(bme280, &data.pressure) != ESP_OK) {
+
+            ESP_LOGE(TAG, "BME280 read error");
+            vTaskDelay(pdMS_TO_TICKS(2000));
+            continue;
+        }
+
+        ESP_LOGI(TAG,
+                 "T=%.1f C, H=%.1f %%, P=%.1f hPa",
+                 data.temperature,
+                 data.humidity,
+                 data.pressure / 100.0f);
+
+        if (xQueueSend(SensorQueueHandle, &data, 0) != pdPASS) {
+            ESP_LOGW(TAG, "Queue full, dropping sample");
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(2000));
+    }
+}
+
+void vControlTask(void *pvParameter) {
+    SensorData_t data;
+
+    while (1) {
+        if (xQueueReceive(SensorQueueHandle, &data, portMAX_DELAY) == pdTRUE) {
+
+            ESP_LOGI(TAG,
+                     "TX: T=%.1f C, H=%.1f %%, P=%.1f hPa",
+                     data.temperature,
+                     data.humidity,
+                     data.pressure / 10.0f);
+
+            espnow_send_telemetry(&data);
+        }
+    }
+}
+
+
+void vMonitorTask(void *pvParameter) {
+    while (1) {
+        UBaseType_t used = uxQueueMessagesWaiting(SensorQueueHandle);
+
+        ESP_LOGI(TAG, "Queue load: %d", (int)used);
+
+        if (SensorTaskHandle != NULL) {
+            eTaskState st = eTaskGetState(SensorTaskHandle);
+            ESP_LOGI(TAG, "SensorTask state: %d", st);
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(2000));
+    }
+}
+
+/* ========================================================= */
+
+void app_main(void) {
+    ESP_LOGI(TAG, "Boot");
+
+    system_init();
+
+    /* === QUEUE === */
     SensorQueueHandle = xQueueCreate(ITEM_SIZE, sizeof(SensorData_t));
     if (SensorQueueHandle == NULL) {
-        ESP_LOGE(TAG, "Failed to create SensorTaskQueue");
-        return;
-    }
-    i2c_bus_init();
-    /*=== BME280 I NIT === */
-    bme280_init();
-    /*=== BME280 INIT === */
-
-    /*=== ESP-NOW INIT === */
-    espnow_handler_init();
-    /*=== ESP-NOW INIT === */
-
-// if (xTaskCreate(
-//             DisplayLvglTask,
-//             "DisplayLvglTask",
-//             4096,
-//             NULL,
-//             5,
-//             NULL) != pdPASS) {
-//         ESP_LOGE(TAG, "Failed to create DisplayLvglTask");
-//     }
-    if (xTaskCreate(vSensorTask,
-                "vSensorTask",
-                4096,
-                NULL,
-                4,
-                &SensorTaskHandle) != pdPASS) {
-        ESP_LOGE(TAG, "Failed to create vSensorTask");
+        ESP_LOGE(TAG, "Queue create failed");
+        abort();
     }
 
-    if (xTaskCreate(ControlTask,
-                "ControlTask",
-                4096,
-                NULL,
-                6,
-                NULL) != pdPASS) {
-        ESP_LOGE(TAG, "Failed to create ControlTask");
+    /* === TASKS === */
+    BaseType_t res;
+
+    res = xTaskCreate(vSensorTask,
+                      "SensorTask",
+                      4096,
+                      NULL,
+                      5,
+                      &SensorTaskHandle);
+    if (res != pdPASS) {
+        ESP_LOGE(TAG, "SensorTask create failed");
+        abort();
     }
 
-    if (xTaskCreate(vTaskMonitor,
-            "vTaskMonitor",
-            configMINIMAL_STACK_SIZE * 2,
-            NULL,
-            3,
-            NULL) != pdPASS) {
-        ESP_LOGE(TAG, "Failed to create vTaskMonitor");
-            }
-    if (xTaskCreate(LedBlink,
-                "LedBlink",
-                configMINIMAL_STACK_SIZE * 2,
-                NULL,
-                3,
-                NULL) != pdPASS) {
-        ESP_LOGE(TAG, "Failed to create LedBlink");
+    res = xTaskCreate(vControlTask,
+                      "ControlTask",
+                      4096,
+                      NULL,
+                      6,
+                      NULL);
+    if (res != pdPASS) {
+        ESP_LOGE(TAG, "ControlTask create failed");
+        abort();
     }
+
+    res = xTaskCreate(vMonitorTask,
+                      "MonitorTask",
+                      2048,
+                      NULL,
+                      3,
+                      NULL);
+    if (res != pdPASS) {
+        ESP_LOGE(TAG, "MonitorTask create failed");
+        abort();
+    }
+
+    ESP_LOGI(TAG, "System started");
 }

@@ -33,29 +33,29 @@ ESP_LOGI(TAG, "Send to %s — status: %d", master_str, (int)status);
 }
 
 void espnow_handler_init(void) {
-    char master_str[18];
-
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-    ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
+
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_start());
+
+    ESP_ERROR_CHECK(esp_wifi_set_channel(6, WIFI_SECOND_CHAN_NONE));
 
     ESP_ERROR_CHECK(esp_now_init());
     ESP_ERROR_CHECK(esp_now_register_send_cb(on_data_sent));
 
-    esp_now_peer_info_t peer = {};
-    memcpy(peer.peer_addr, MASTER_MAC, 6);
-    peer.channel = 0;
+    esp_now_peer_info_t peer = {0};
+    memcpy(peer.peer_addr, MASTER_MAC, ESP_NOW_ETH_ALEN);
+    peer.channel = 6;
+    peer.ifidx   = WIFI_IF_STA;
     peer.encrypt = false;
+
     ESP_ERROR_CHECK(esp_now_add_peer(&peer));
 
-    snprintf(master_str, sizeof(master_str), MACSTR, MAC2STR(MASTER_MAC));
-    ESP_LOGI(TAG, "ESP-NOW slave initialized, master: %s", master_str);
-
+    ESP_LOGI(TAG, "ESP-NOW slave ready");
 }
 
 void espnow_send_telemetry(const SensorData_t *data) {
@@ -65,7 +65,7 @@ void espnow_send_telemetry(const SensorData_t *data) {
         .crc  = 0,
     };
     memcpy(&pkt.payload, data, sizeof(SensorData_t));
-    pkt.crc = calc_crc(&pkt.payload, sizeof(SensorData_t));
+    pkt.crc = calc_crc(&pkt, sizeof(pkt) - sizeof(pkt.crc));
 
     esp_err_t ret = esp_now_send(MASTER_MAC, (uint8_t *)&pkt, sizeof(pkt));
     if (ret != ESP_OK) {
