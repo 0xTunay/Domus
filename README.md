@@ -15,6 +15,7 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
 * **ESP-GATEWAY**
     * Manages communication between multiple ESP32-C3 nodes
     * Receives data from slave devices and forwards it to the MQTT broker
+  ![img](docs/esp-now.png)  
 * **MQTTS Broker (Raspberry pi 5)**
     * Receives data from ESP-GATEWAY device
     * Topics are organized by room, for example
@@ -23,9 +24,10 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
       ```text
           sensors/temp
           sensors/humidity
+          sensors/pressure
       ```
       like here
-    *
+
     ![img](docs/example_topics.png)
 * **Telegraf**
     * Telegraf takes the message, converts it to time-series format, adds tags (host=raspberry) and sends it to InfluxDB (outputs.influxdb_v2)
@@ -42,6 +44,3 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
 ![img](docs/grafana.png)
 #### Project architecture diagram
 ![img](docs/Domus.drawio(1).png)
-
-
-_Currently all screenshot are reading from a DHT sensor, because Aliexpress delayed the delivery of my BME280 and ESP32-C3. Sorry._
