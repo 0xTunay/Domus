@@ -131,8 +131,10 @@ void app_main(void)
     }
     ESP_ERROR_CHECK(ret);
 
-    /* WiFi → MQTT → ESP-NOW */
     wifi_init_sta();
+   // wifi_wait_connected();
+  //  esp_wifi_set_ps(WIFI_PS_NONE);
+
     mqtt_app_start();
     espnow_master_init();
 

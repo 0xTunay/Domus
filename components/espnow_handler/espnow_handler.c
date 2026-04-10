@@ -11,6 +11,7 @@
 static const char *TAG = "[espnow_handler]";
 
 QueueHandle_t SensorQueueHandle = NULL;
+static const uint8_t SLAVE_MAC[6] = {0xe8, 0x3d, 0xc1, 0x8c, 0x04, 0xfc};
 
 static void espnow_recv_cb(const esp_now_recv_info_t *recv_info,
                            const uint8_t *data,
@@ -69,5 +70,13 @@ void espnow_master_init(void)
     ESP_ERROR_CHECK(esp_now_init());
     ESP_ERROR_CHECK(esp_now_register_recv_cb(espnow_recv_cb));
 
-    ESP_LOGI(TAG, "ESP-NOW master initialized");
+    esp_now_peer_info_t peer = {0};
+    memcpy(peer.peer_addr, SLAVE_MAC, ESP_NOW_ETH_ALEN);
+    peer.channel = 6;
+    peer.ifidx   = WIFI_IF_STA;
+    peer.encrypt = false;
+
+    ESP_ERROR_CHECK(esp_now_add_peer(&peer));
+
+    ESP_LOGI(TAG, "ESP-NOW master ready");
 }
