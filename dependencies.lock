@@ -211,7 +211,7 @@ dependencies:
       type: service
     version: 2.7.2
   espressif/esp_mmap_assets:
-    component_hash: 91d785326b03db15e2f7f1314d8c976d38f21aa5759b570dcbbc89bcf247fd27
+    component_hash: b7c559238d9f4c11048b1d7302f5474e4f4f590902433efd792bd0cbf5324f2a
     dependencies:
     - name: espressif/cmake_utilities
       registry_url: https://components.espressif.com
@@ -223,7 +223,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.4.0
+    version: 2.0.0
   espressif/esp_new_jpeg:
     component_hash: e6af208a875abd0ecfc0213d3751a11b504b463ebde6930f24096047925fa5c1
     dependencies: []
@@ -251,7 +251,7 @@ dependencies:
       type: service
     version: 2.14.2
   espressif/i2c_bus:
-    component_hash: 4e990dc11734316186b489b362c61d41f23f79d58bc169795cec215e528cba14
+    component_hash: 804ec068d163570fd367b279a310ca383484630d2310c586b50def0bcf21de13
     dependencies:
     - name: espressif/cmake_utilities
       registry_url: https://components.espressif.com
@@ -263,7 +263,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.5.0
+    version: 1.5.1
   espressif/knob:
     component_hash: 138ed090b4c9090a0a678f695b9d1884b368130c729b7333ed35bd7f4e8da80e
     dependencies:
@@ -279,7 +279,7 @@ dependencies:
       type: service
     version: 1.0.2
   espressif/libpng:
-    component_hash: 8c426d10dc2bf187aafd84ef42834e1a44835ed08a293d78683eb7811d8f8c25
+    component_hash: 940ea54356129e5252b8ed50bc535fdce2836d09815e8c362595b5d538471f48
     dependencies:
     - name: idf
       require: private
@@ -291,7 +291,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.6.55
+    version: 1.6.56
   espressif/zlib:
     component_hash: 64ea2fd6754c5a05951f1ddb312ac835cd782e68cb5bd9dfcd1c3a107c8fbfbc
     dependencies:
@@ -313,12 +313,6 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 9.5.0
-  protocol_examples_common:
-    dependencies: []
-    source:
-      path: /home/tunay/esp-idf-v5.5.2/examples/common_components/protocol_examples_common
-      type: local
-    version: '*'
 direct_dependencies:
 - esp-idf-lib/dht
 - espressif/bme280
@@ -327,7 +321,6 @@ direct_dependencies:
 - espressif/esp_lvgl_port
 - idf
 - lvgl/lvgl
-- protocol_examples_common
-manifest_hash: d379b7286eec4ca1ba95cc89f3b8f4bf205771a1b1eec1b34ef9113372bfbec7
+manifest_hash: c969d11f34de3e8a9c122b2af140314b15a74ff80e572a55a14e2fb5dc325571
 target: esp32c3
 version: 2.0.0
