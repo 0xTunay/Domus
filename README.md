@@ -12,6 +12,9 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
     * BME280 sensor measures temperature, pressure and humidity
     * SPI TFT display: displays current readings locally
     * MQTT Client: Sends data to the broker over the network.
+ 
+  
+ This node implement on other git branch ![feat/BME280-integration](https://github.com/0xTunay/Domus/tree/feat/BME280-integration)
 * **ESP-GATEWAY**
     * Manages communication between multiple ESP32-C3 nodes
     * Receives data from slave devices and forwards it to the MQTT broker
