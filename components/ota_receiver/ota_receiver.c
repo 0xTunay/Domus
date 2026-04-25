@@ -8,7 +8,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "ota_receiver.h"
-#include "ota_receiver.h"   // общий заголовок с ota_pkt_t, ota_cmd_t, CHUNK_SIZE
+#include "ota_receiver.h"
+#include "esp_log.h"
 
 #undef  TAG
 #define TAG "OTA_RX"

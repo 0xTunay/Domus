@@ -8,8 +8,8 @@
 #include "BME280.h"
 
 
-#define I2C_MASTER_SCL_IO           GPIO_NUM_1           /*!< gpio number for I2C master clock IO2*/
-#define I2C_MASTER_SDA_IO           GPIO_NUM_2           /*!< gpio number for I2C master data  IO1*/
+#define I2C_MASTER_SCL_IO           GPIO_NUM_9           /*!< gpio number for I2C master clock IO2*/
+#define I2C_MASTER_SDA_IO           GPIO_NUM_8           /*!< gpio number for I2C master data  IO1*/
 #define I2C_MASTER_NUM              I2C_NUM_0            /*!< I2C port number for master bme280 */
 #define I2C_MASTER_TX_BUF_DISABLE   0                    /*!< I2C master do not need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE   0                    /*!< I2C master do not need buffer */
