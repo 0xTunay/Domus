@@ -47,3 +47,10 @@ Domus consists of distributed ESP32-C3 nodes, a central MQTT broker on a Raspber
 ![img](docs/grafana.png)
 #### Project architecture diagram
 ![img](docs/Domus.drawio(1).png)
+
+
+**Future**
+* TLS Validation and SNTP Protocol support
+* Migrate these to NVS
+* Replace JSON with MessagePack for data transmission between nodes
+* Implement a master key for ESP-NOW to prevent external devices from injecting false data into your local network
